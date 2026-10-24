@@ -1,0 +1,10 @@
+{
+  "name": "qbrain-pay",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
+    "ethers": "^6.17.0",
+    "resend": "^6.34.1"
+  }
+}

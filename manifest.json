@@ -1,0 +1,32 @@
+{
+  "name": "QBrain Pay - Virtual Visa Card",
+  "short_name": "QBrain Pay",
+  "description": "Next-Gen Luxury Virtual Visa & Crypto Payments Platform",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#040918",
+  "theme_color": "#060b18",
+  "categories": ["finance", "productivity"],
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

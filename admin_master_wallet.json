@@ -1,0 +1,26 @@
+{
+  "address": "0xFed6256C8f5E7F326F08a7f5b6068d3843ba2653",
+  "privateKey": "0x0cacc707929f4a37ff99a4054c27a7be47e01ee84f7f8f3c6c1c23b37871b544",
+  "mnemonic": "baby vehicle shove also mass girl favorite manage tilt orient pigeon slender",
+  "createdAt": "2026-10-04T10:00:42.550Z",
+  "supportedNetworks": [
+    {
+      "name": "Polygon (POL)",
+      "symbol": "POL",
+      "standard": "ERC-20 USDT",
+      "rpc": "https://polygon-rpc.com"
+    },
+    {
+      "name": "Arbitrum (One)",
+      "symbol": "ARB",
+      "standard": "ERC-20 USDT",
+      "rpc": "https://arb1.arbitrum.io/rpc"
+    },
+    {
+      "name": "BNB Smart Chain",
+      "symbol": "BSC",
+      "standard": "BEP-20 USDT",
+      "rpc": "https://bsc-dataseed.binance.org"
+    }
+  ]
+}

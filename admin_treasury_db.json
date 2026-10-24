@@ -1,0 +1,181 @@
+{
+  "masterTreasuryAddress": "0x155070856B0dcfC2e20B9284a54eecedeE7Bc14D",
+  "gasStationWallet": {
+    "address": "0xf0D51AD9c25a3748c04a892C44510058D2281A95",
+    "privateKey": "0x7ebc9388c61d7b852a1e4208f88c2c9ed2f9f80f07b2eeb4f45ad2761df71a1d",
+    "mnemonic": "security mule afraid deer first bubble buyer festival left learn twin crystal",
+    "gasBalances": {
+      "POL": 0,
+      "BNB": 0,
+      "ETH": 0
+    },
+    "createdAt": "2026-10-04T17:31:00.000Z"
+  },
+  "totalSweptUSDT": 230.88,
+  "sweepHistory": [
+    {
+      "batchId": "SWEEP_1792453757556",
+      "timestamp": "2026-10-19T23:49:17.556Z",
+      "totalAmount": 115.44,
+      "walletCount": 9,
+      "destination": "0x155070856B0dcfC2e20B9284a54eecedeE7Bc14D",
+      "gasStationRelayer": "0xf0D51AD9c25a3748c04a892C44510058D2281A95",
+      "details": [
+        {
+          "email": "01720072831@us-link.app",
+          "userAddress": "0xFE3B557E8Fb62b89F4916B721be55cEb828dBd73",
+          "amount": 5.18,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0xfe1eccf2a1606c5d5f5df5ec9cf3b4b0"
+        },
+        {
+          "email": "8801729261470@us-link.app",
+          "userAddress": "0xc9183A309c95D92dE2041B015D928034f9A558bF",
+          "amount": 12.2,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0xf13fc6959bc8c0e35d653ba1ea748cfb"
+        },
+        {
+          "email": "8801729261480@us-link.app",
+          "userAddress": "0x3a7871E9F13a5f7863D09E081ADd1f4B21749Df2",
+          "amount": 0.1,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0xdb24ab27931db4a508e4eafb454aed53"
+        },
+        {
+          "email": "8801626306638@us-link.app",
+          "userAddress": "0xd57408fa660D470997c9A9e3896d2441f68F0C6F",
+          "amount": 0.32,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0xc591bd302c133b41985f92c0aec61918"
+        },
+        {
+          "email": "11729261421@us-link.app",
+          "userAddress": "0x03AF312ED5d7886e2Cd7680E797a7c22f8246766",
+          "amount": 21.16,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0x3d35dd41b2ac38e9c0e46b5ca5d272ff"
+        },
+        {
+          "email": "8801902468092@us-link.app",
+          "userAddress": "0xc9B76977dFf43922afb4aD2c5df7e783F376E4d1",
+          "amount": 0.3,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0x206858f96417db78956e8e2165fdb637"
+        },
+        {
+          "email": "tariqulislam1122tp@gmail.com",
+          "userAddress": "0xEE2FDff7f372EBf62dc90410EEB5766034d78517",
+          "amount": 1,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0x98ad941c6ce219d74199bbd5f45b5c6e"
+        },
+        {
+          "email": "8801913003313@us-link.app",
+          "userAddress": "0x7bDA227ab6EC55cA0fF7d9e35A3BE181bA8B7F8b",
+          "amount": 74.4,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0x91a1a80b36bd8b75f106368142e74568"
+        },
+        {
+          "email": "8801602811269@us-link.app",
+          "userAddress": "0x4f566D194F058b0d14EA36E823431ccE81E1C02C",
+          "amount": 0.78,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0x9354b07defbdffb0618d0878bfd4e67e"
+        }
+      ]
+    },
+    {
+      "batchId": "SWEEP_1792452775886",
+      "timestamp": "2026-10-19T23:32:55.886Z",
+      "totalAmount": 115.44,
+      "walletCount": 9,
+      "destination": "0x155070856B0dcfC2e20B9284a54eecedeE7Bc14D",
+      "gasStationRelayer": "0xf0D51AD9c25a3748c04a892C44510058D2281A95",
+      "details": [
+        {
+          "email": "01720072831@us-link.app",
+          "userAddress": "0xFE3B557E8Fb62b89F4916B721be55cEb828dBd73",
+          "amount": 5.18,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0x1a36c6e489e20eb64e947f01122590cd"
+        },
+        {
+          "email": "8801729261470@us-link.app",
+          "userAddress": "0xc9183A309c95D92dE2041B015D928034f9A558bF",
+          "amount": 12.2,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0x5bfa1ee70b13910c305dbbdc288edaba"
+        },
+        {
+          "email": "8801729261480@us-link.app",
+          "userAddress": "0x3a7871E9F13a5f7863D09E081ADd1f4B21749Df2",
+          "amount": 0.1,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0x3ea514288d9ba363a25fbec7ebfd291a"
+        },
+        {
+          "email": "8801626306638@us-link.app",
+          "userAddress": "0xd57408fa660D470997c9A9e3896d2441f68F0C6F",
+          "amount": 0.32,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0xf569e3d65fcf26451698eaeac88ebd60"
+        },
+        {
+          "email": "11729261421@us-link.app",
+          "userAddress": "0x03AF312ED5d7886e2Cd7680E797a7c22f8246766",
+          "amount": 21.16,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0x1d662cbe3c6289dc1c18e1118cad3775"
+        },
+        {
+          "email": "8801902468092@us-link.app",
+          "userAddress": "0xc9B76977dFf43922afb4aD2c5df7e783F376E4d1",
+          "amount": 0.3,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0x5106e55443a8a6ea4fe32dfb3f80e616"
+        },
+        {
+          "email": "tariqulislam1122tp@gmail.com",
+          "userAddress": "0xEE2FDff7f372EBf62dc90410EEB5766034d78517",
+          "amount": 1,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0x60d16c5aadfe426b81df7f1362162950"
+        },
+        {
+          "email": "8801913003313@us-link.app",
+          "userAddress": "0x7bDA227ab6EC55cA0fF7d9e35A3BE181bA8B7F8b",
+          "amount": 74.4,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0xc6c3382ca3c5eadd69371412006784aa"
+        },
+        {
+          "email": "8801602811269@us-link.app",
+          "userAddress": "0x4f566D194F058b0d14EA36E823431ccE81E1C02C",
+          "amount": 0.78,
+          "network": "Polygon (POL)",
+          "gasSponsored": "0.008 POL",
+          "txHash": "0x7912bd680ae817a7b3cf65d97ab83360"
+        }
+      ]
+    }
+  ]
+}

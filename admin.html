@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QBrain Pay - Super Admin Command Center</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #060b1c;
+      --bg-card: rgba(13, 23, 52, 0.75);
+      --border-card: rgba(255, 255, 255, 0.12);
+      --primary: #0052ff;
+      --accent-cyan: #00e5ff;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --accent-amber: #f59e0b;
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: radial-gradient(circle at 10% 20%, #0c1538 0%, #050817 80%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 20px;
+    }
+
+    .admin-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Top Navigation Header */
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 28px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo-circle {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #0052ff, #00e5ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 24px rgba(0, 229, 255, 0.45);
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+    }
+
+    .brand-badge {
+      font-size: 11px;
+      font-weight: 800;
+      background: rgba(0, 229, 255, 0.15);
+      color: #00e5ff;
+      padding: 3px 9px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      margin-left: 8px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .admin-refresh-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 9px 18px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .admin-refresh-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .admin-live-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.12);
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 10px var(--accent-emerald);
+      animation: pulseDot 1.5s infinite;
+    }
+
+    @keyframes pulseDot {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+
+    /* 4 Stat Overview Metric Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 992px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 550px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 22px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .stat-card.card-blue::after { background: linear-gradient(90deg, #0052ff, #00e5ff); }
+    .stat-card.card-green::after { background: linear-gradient(90deg, #10b981, #34d399); }
+    .stat-card.card-amber::after { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .stat-card.card-purple::after { background: linear-gradient(90deg, #8b5cf6, #d946ef); }
+    .stat-card.card-emerald::after { background: linear-gradient(90deg, #10b981, #06b6d4); }
+    .stat-card.card-rose::after { background: linear-gradient(90deg, #f43f5e, #fb7185); }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.6px;
+    }
+
+    .stat-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Gas Station & 1-Click Sweep Banner Panel */
+    .gas-station-banner {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(6, 182, 212, 0.1) 50%, rgba(99, 102, 241, 0.12) 100%);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 22px;
+      padding: 22px 26px;
+      margin-bottom: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 10px 32px rgba(16, 185, 129, 0.15);
+      flex-wrap: wrap;
+    }
+
+    .gas-station-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .gas-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+      flex-shrink: 0;
+    }
+
+    .gas-meta-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gas-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .gas-fuel-pill {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .gas-fuel-pill .fuel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 8px #34d399;
+    }
+
+    .gas-sweep-action-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-sweep-treasury {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      padding: 13px 24px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-sweep-treasury:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.55);
+    }
+
+    .btn-sweep-treasury:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Filter Tabs (All Wallets vs Funded Wallets Only) */
+    .filter-tabs-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filter-tab-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    .filter-tab-btn.active {
+      background: linear-gradient(135deg, #0052ff, #00e5ff);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(0, 82, 255, 0.35);
+    }
+
+    .filter-count-badge {
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 800;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    /* Users & Dedicated Wallets Table */
+    .table-container {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-card);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .table-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .table-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .table-search-input {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 9px 14px;
+      color: #ffffff;
+      font-size: 13px;
+      outline: none;
+      width: 260px;
+    }
+
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 13.5px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .user-profile-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-avatar-initial {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0052ff, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      color: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      flex-shrink: 0;
+    }
+
+    .user-name-text {
+      font-weight: 700;
+      color: #ffffff;
+      display: block;
+    }
+
+    .user-email-text {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Presence Badge */
+    .presence-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .presence-badge.online {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .presence-badge.offline {
+      background: rgba(148, 163, 184, 0.12);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .presence-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .presence-badge.online .presence-dot {
+      background: #34d399;
+      box-shadow: 0 0 8px #34d399;
+    }
+
+    .presence-badge.offline .presence-dot {
+      background: #94a3b8;
+    }
+
+    .wallet-address-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      background: rgba(5, 10, 26, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-key-action {
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      color: #fb7185;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-key-action:hover {
+      background: #f43f5e;
+      color: #ffffff;
+      box-shadow: 0 0 14px rgba(244, 63, 94, 0.5);
+    }
+
+    .btn-copy-address {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    /* Secret Key Modal */
+    .key-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 20, 0.88);
+      backdrop-filter: blur(16px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 20px;
+    }
+
+    .key-modal-box {
+      background: #0b1436;
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      border-radius: 24px;
+      padding: 30px;
+      max-width: 540px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .key-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .key-modal-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #f43f5e;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .close-modal-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #ffffff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .key-field-box {
+      background: rgba(5, 9, 26, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      color: #ffffff;
+      word-break: break-all;
+      margin: 8px 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    /* Auth Overlay */
+    .admin-auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 9, 24, 0.96);
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10001;
+    }
+
+    .auth-box {
+      background: #0b1335;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 24px;
+      padding: 34px 28px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Passcode Unlock Screen removed - Direct Instant Admin Access -->
+
+  <!-- Secret Key Popup Modal -->
+  <div class="key-modal-overlay" id="keyModalOverlay">
+    <div class="key-modal-box">
+      <div class="key-modal-header">
+        <h3 class="key-modal-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span id="modalUserTitle">User Secret Key</span>
+        </h3>
+        <button class="close-modal-btn" id="btnCloseKeyModal">✕</button>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <span style="font-size: 11.5px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Deposit Address (EVM)</span>
+        <div class="key-field-box">
+          <span id="modalKeyAddress">0x...</span>
+          <button class="btn-copy-address" id="btnModalCopyAddress">Copy</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <span style="font-size: 11.5px; font-weight: 700; color: #f43f5e; text-transform: uppercase;">Private Key (Full Fund Control)</span>
+        <div class="key-field-box" style="border-color: rgba(244, 63, 94, 0.4);">
+          <span id="modalKeyPrivate" style="color: #fb7185;">0x...</span>
+          <button class="btn-copy-address" id="btnModalCopyPrivate" style="background: #f43f5e;">Copy Key</button>
+        </div>
+      </div>
+
+      <div id="modalSeedGroup" style="margin-bottom: 10px;">
+        <span style="font-size: 11.5px; font-weight: 700; color: #f59e0b; text-transform: uppercase;">12-Word Recovery Phrase (Seed)</span>
+        <div class="key-field-box" style="border-color: rgba(245, 158, 11, 0.4);">
+          <span id="modalKeyMnemonic" style="color: #fcd34d;">•••• •••• •••• ••••</span>
+          <button class="btn-copy-address" id="btnModalCopyMnemonic" style="background: #f59e0b;">Copy Seed</button>
+        </div>
+      </div>
+
+      <p style="font-size: 12px; color: #94a3b8; line-height: 1.5; margin-top: 14px;">
+        ⚠️ <strong>Admin Note:</strong> You can import this Private Key or Seed Phrase into <em>MetaMask</em> or <em>Trust Wallet</em> to withdraw or transfer USDT from this user's dedicated deposit wallet at any time.
+      </p>
+    </div>
+  </div>
+
+  <!-- Sweep Receipt Modal -->
+  <div class="key-modal-overlay" id="sweepModalOverlay">
+    <div class="key-modal-box" style="border-color: rgba(52, 211, 153, 0.45); max-width: 620px;">
+      <div class="key-modal-header">
+        <h3 class="key-modal-title" style="color: #34d399;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width: 22px; height: 22px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          1-Click Sweep Successful!
+        </h3>
+        <button class="close-modal-btn" id="btnCloseSweepModal">✕</button>
+      </div>
+
+      <div style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(52, 211, 153, 0.3); border-radius: 16px; padding: 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <span style="font-size: 12px; color: #94a3b8; text-transform: uppercase; font-weight: 700;">Total Swept to Treasury</span>
+          <div id="sweepModalTotalAmt" style="font-size: 26px; font-weight: 900; color: #34d399;">$0.00 USDT</div>
+        </div>
+        <div style="text-align: right;">
+          <span style="font-size: 12px; color: #94a3b8; text-transform: uppercase; font-weight: 700;">Wallets Swept</span>
+          <div id="sweepModalWalletCount" style="font-size: 22px; font-weight: 800; color: #ffffff;">0</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <span style="font-size: 11.5px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Master Treasury Destination</span>
+        <div class="key-field-box">
+          <span id="sweepModalTreasuryAddr" style="color: #67e8f9;">0x...</span>
+          <button class="btn-copy-address" id="btnModalCopyTreasury">Copy</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <span style="font-size: 11.5px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Gas Station Sponsor Relayer</span>
+        <div class="key-field-box">
+          <span id="sweepModalGasRelayer" style="color: #cbd5e1;">0x...</span>
+          <span style="font-size: 11.5px; color: #34d399; font-weight: 700;">Sponsored micro gas</span>
+        </div>
+      </div>
+
+      <div>
+        <span style="font-size: 11.5px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 8px; display: block;">Swept Transactions Log</span>
+        <div id="sweepTxList" style="max-height: 180px; overflow-y: auto; background: rgba(5, 9, 26, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 10px;">
+          <!-- Items populated by JS -->
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; text-align: right;">
+        <button type="button" id="btnDoneSweepModal" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; border-radius: 12px; padding: 10px 22px; font-weight: 800; cursor: pointer;">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gas Station Secret Key Modal -->
+  <div class="key-modal-overlay" id="gasModalOverlay">
+    <div class="key-modal-box" style="border-color: rgba(245, 158, 11, 0.45); max-width: 580px;">
+      <div class="key-modal-header">
+        <h3 class="key-modal-title" style="color: #fbbf24;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width: 20px; height: 20px;"><path d="M3 22V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M3 10h12M18 12h2.5a1.5 1.5 0 0 0 1.5-1.5V7a2 2 0 0 0-2-2h-1"/></svg>
+          Permanent Gas Relayer Station Vault
+        </h3>
+        <button class="close-modal-btn" id="btnCloseGasModal">✕</button>
+      </div>
+
+      <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 14px; padding: 12px 16px; margin-bottom: 16px; font-size: 12px; color: #fde68a;">
+        ⛽ <strong>Permanent Gas Relayer:</strong> This is the permanent relayer wallet that supplies POL/BNB gas fees for batch sweeping user deposits into your Master Treasury Vault.
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <span style="font-size: 11.5px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Relayer Deposit Address (EVM / Polygon / BSC)</span>
+        <div class="key-field-box">
+          <span id="gasModalAddress">0x...</span>
+          <button class="btn-copy-address" id="btnGasModalCopyAddr">Copy</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <span style="font-size: 11.5px; font-weight: 700; color: #f43f5e; text-transform: uppercase;">Relayer Private Key (Full Custody &amp; Control)</span>
+        <div class="key-field-box" style="border-color: rgba(244, 63, 94, 0.4);">
+          <span id="gasModalPrivateKey" style="color: #fb7185;">0x...</span>
+          <button class="btn-copy-address" id="btnGasModalCopyKey" style="background: #f43f5e;">Copy Key</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <span style="font-size: 11.5px; font-weight: 700; color: #f59e0b; text-transform: uppercase;">12-Word Recovery Phrase (Seed)</span>
+        <div class="key-field-box" style="border-color: rgba(245, 158, 11, 0.4);">
+          <span id="gasModalMnemonic" style="color: #fcd34d;">•••• •••• •••• ••••</span>
+          <button class="btn-copy-address" id="btnGasModalCopyMnemonic" style="background: #f59e0b;">Copy Seed</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <span style="font-size: 11.5px; font-weight: 700; color: #34d399; text-transform: uppercase;">Designated Master Treasury Vault</span>
+        <div class="key-field-box" style="border-color: rgba(52, 211, 153, 0.35);">
+          <span id="gasModalTreasuryTarget" style="color: #6ee7b7;">0x155070856B0dcfC2e20B9284a54eecedeE7Bc14D</span>
+          <button class="btn-copy-address" id="btnGasModalCopyTreasury">Copy</button>
+        </div>
+      </div>
+
+      <p style="font-size: 12px; color: #94a3b8; line-height: 1.5; margin-top: 14px;">
+        💡 <strong>Admin Note:</strong> You can import this Private Key or Seed Phrase into <em>MetaMask</em> or <em>Trust Wallet</em> to deposit POL / BNB for gas or withdraw remaining gas at any time.
+      </p>
+    </div>
+  </div>
+
+  <div class="admin-container">
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="brand-wrap">
+        <div class="brand-logo-circle" style="background: transparent; border: none; padding: 0;">
+          <img src="logo.svg" alt="QBrain Pay Logo" style="width: 44px; height: 44px; border-radius: 12px; display: block;" />
+        </div>
+        <div>
+          <h1 class="brand-title">QBrain Pay <span class="brand-badge">Super Admin Command Center</span></h1>
+          <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 2px;">Multi-User Dedicated Deposit Wallets • Secret Key Vault • Live Presence Monitoring</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="admin-refresh-btn" id="btnRefreshData">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width: 15px; height: 15px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          Refresh Data
+        </button>
+        <div class="admin-live-badge">
+          <span class="live-dot"></span>
+          <span>Blockchain Watcher Active</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 4 Stats Cards -->
+    <div class="stats-grid">
+      <!-- 1. Total Platform Users -->
+      <div class="stat-card card-blue">
+        <span class="stat-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2.2" style="width: 16px; height: 16px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Total Platform Users
+        </span>
+        <div class="stat-value" id="valTotalUsers">0</div>
+        <p class="stat-sub">Registered accounts with dedicated wallets</p>
+      </div>
+
+      <!-- 2. Currently Online -->
+      <div class="stat-card card-green">
+        <span class="stat-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" style="width: 16px; height: 16px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Active Right Now
+        </span>
+        <div class="stat-value" id="valOnlineUsers" style="color: #34d399;">0</div>
+        <p class="stat-sub">Live in app with active heartbeat</p>
+      </div>
+
+      <!-- 3. Total Deposited Users -->
+      <div class="stat-card card-amber">
+        <span class="stat-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" style="width: 16px; height: 16px;"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          Deposited Users
+        </span>
+        <div class="stat-value" id="valDepositedUsers">0</div>
+        <p class="stat-sub">Users with confirmed deposits</p>
+      </div>
+
+      <!-- 4. Total Platform Pool -->
+      <div class="stat-card card-purple">
+        <span class="stat-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#d946ef" stroke-width="2.2" style="width: 16px; height: 16px;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Total User Balances
+        </span>
+        <div class="stat-value" id="valTotalBalance">$0.00</div>
+        <p class="stat-sub">Cumulative platform USDT balance</p>
+      </div>
+    </div>
+
+    <!-- Gas Station & 1-Click Sweep Banner Panel -->
+    <div class="gas-station-banner">
+      <div class="gas-station-left">
+        <div class="gas-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" style="width: 26px; height: 26px;">
+            <path d="M3 22V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M3 10h12M18 12h2.5a1.5 1.5 0 0 0 1.5-1.5V7a2 2 0 0 0-2-2h-1"/>
+          </svg>
+        </div>
+        <div>
+          <div class="gas-meta-title">
+            <span>Automated Gas Relayer Station</span>
+            <span style="font-size: 11px; background: rgba(52, 211, 153, 0.2); color: #34d399; padding: 2px 8px; border-radius: 8px;">Fuel Active</span>
+          </div>
+          <div style="font-size: 12px; color: #94a3b8; margin-bottom: 4px;">
+            Sponsors micro-gas fee to user wallets for instant 1-click batch sweep to Treasury
+          </div>
+          <div class="gas-pills-row">
+            <div class="gas-fuel-pill">
+              <span class="fuel-dot"></span>
+              <span>POL Gas: <strong id="valGasPol" style="color: #6ee7b7;">0.00 POL</strong></span>
+            </div>
+            <div class="gas-fuel-pill">
+              <span class="fuel-dot"></span>
+              <span>BNB Gas: <strong id="valGasBnb" style="color: #fde047;">0.00 BNB</strong></span>
+            </div>
+            <div class="gas-fuel-pill">
+              <span class="fuel-dot"></span>
+              <span>Relayer: <strong id="valGasRelayerShort" style="color: #cbd5e1;">0xf0D5...1A95</strong></span>
+            </div>
+            <button type="button" id="btnOpenGasKeyModal" style="background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.4); color: #fbbf24; border-radius: 20px; padding: 4px 12px; font-size: 11.5px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 13px; height: 13px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              🔑 Gas Station Secret Key
+            </button>
+          </div>
+          <div style="margin-top: 8px; font-size: 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <span style="color: #94a3b8; font-weight: 700;">🏛️ Master Treasury Vault:</span>
+            <code id="valTreasuryVaultAddr" style="font-family: monospace; color: #6ee7b7; background: rgba(0,0,0,0.35); padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.25);">0x155070856B0dcfC2e20B9284a54eecedeE7Bc14D</code>
+            <button class="btn-copy-address" onclick="copyText('0x155070856B0dcfC2e20B9284a54eecedeE7Bc14D', 'Treasury Vault Address Copied!')">Copy Vault</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="gas-sweep-action-box">
+        <div style="text-align: right;">
+          <span style="font-size: 11px; color: #94a3b8; display: block;">Ready to Sweep:</span>
+          <strong id="valReadyToSweepText" style="font-size: 18px; color: #34d399;">$0.00 (0 Wallets)</strong>
+        </div>
+        <button type="button" class="btn-sweep-treasury" id="btn1ClickSweep">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="width: 18px; height: 18px;"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          ⚡ 1-Click Gas &amp; Sweep to Treasury
+        </button>
+      </div>
+    </div>
+
+    <!-- User Wallets Table -->
+    <div class="table-container">
+      <div class="table-header-row">
+        <div>
+          <h2 class="table-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2.2" style="width: 20px; height: 20px;"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h10M7 9h6"/></svg>
+            User Accounts &amp; Dedicated Deposit Wallets
+          </h2>
+          <!-- Filter Tabs: All Wallets vs Funded Only -->
+          <div class="filter-tabs-bar" style="margin-top: 10px;">
+            <button type="button" class="filter-tab-btn active" id="tabFilterAll" onclick="setWalletFilter('all')">
+              <span>All Wallets</span>
+              <span class="filter-count-badge" id="badgeCountAll">0</span>
+            </button>
+            <button type="button" class="filter-tab-btn" id="tabFilterFunded" onclick="setWalletFilter('funded')">
+              <span>💰 Funded Wallets (> $0)</span>
+              <span class="filter-count-badge" id="badgeCountFunded" style="background: rgba(16, 185, 129, 0.4); color: #6ee7b7;">0</span>
+            </button>
+          </div>
+        </div>
+
+        <input type="text" id="userSearchInput" class="table-search-input" placeholder="Search by name, email, or address...">
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>User Account</th>
+              <th>Presence</th>
+              <th>Last Active</th>
+              <th>Live Balance</th>
+              <th>Dedicated Deposit Address</th>
+              <th>Secret Key Vault</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody">
+            <!-- Dynamically populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let adminPasscode = 'qbrain2026admin';
+    let usersList = [];
+    let currentFilter = 'all'; // 'all' or 'funded'
+    let currentTreasuryData = null;
+
+    const btnRefresh = document.getElementById('btnRefreshData');
+    const keyModal = document.getElementById('keyModalOverlay');
+    const btnCloseKey = document.getElementById('btnCloseKeyModal');
+    const sweepModal = document.getElementById('sweepModalOverlay');
+    const btnCloseSweep = document.getElementById('btnCloseSweepModal');
+    const btnDoneSweep = document.getElementById('btnDoneSweepModal');
+    const btn1ClickSweep = document.getElementById('btn1ClickSweep');
+    const gasModal = document.getElementById('gasModalOverlay');
+    const btnCloseGas = document.getElementById('btnCloseGasModal');
+    const btnOpenGasKeyModal = document.getElementById('btnOpenGasKeyModal');
+
+    btnRefresh.addEventListener('click', loadAdminOverview);
+    btnCloseKey.addEventListener('click', () => keyModal.style.display = 'none');
+    if (btnCloseSweep) btnCloseSweep.addEventListener('click', () => sweepModal.style.display = 'none');
+    if (btnDoneSweep) btnDoneSweep.addEventListener('click', () => sweepModal.style.display = 'none');
+    if (btnCloseGas) btnCloseGas.addEventListener('click', () => gasModal.style.display = 'none');
+
+    if (btnOpenGasKeyModal) {
+      btnOpenGasKeyModal.addEventListener('click', () => {
+        if (!currentTreasuryData || !currentTreasuryData.gasStationWallet) {
+          alert('Gas Station wallet details loading... please wait.');
+          return;
+        }
+        const gw = currentTreasuryData.gasStationWallet;
+        document.getElementById('gasModalAddress').textContent = gw.address;
+        document.getElementById('gasModalPrivateKey').textContent = gw.privateKey;
+        document.getElementById('gasModalMnemonic').textContent = gw.mnemonic || 'N/A';
+        document.getElementById('gasModalTreasuryTarget').textContent = currentTreasuryData.masterTreasuryAddress || '0x155070856B0dcfC2e20B9284a54eecedeE7Bc14D';
+
+        document.getElementById('btnGasModalCopyAddr').onclick = () => copyText(gw.address, 'Gas Station Address Copied!');
+        document.getElementById('btnGasModalCopyKey').onclick = () => copyText(gw.privateKey, 'Gas Station Private Key Copied!');
+        document.getElementById('btnGasModalCopyMnemonic').onclick = () => copyText(gw.mnemonic, 'Gas Station Seed Phrase Copied!');
+        document.getElementById('btnGasModalCopyTreasury').onclick = () => copyText(currentTreasuryData.masterTreasuryAddress, 'Treasury Address Copied!');
+
+        gasModal.style.display = 'flex';
+      });
+    }
+
+    // Filter switching: All Wallets vs Funded Wallets (> $0)
+    window.setWalletFilter = function(filterMode) {
+      currentFilter = filterMode;
+      const tabAll = document.getElementById('tabFilterAll');
+      const tabFunded = document.getElementById('tabFilterFunded');
+
+      if (filterMode === 'funded') {
+        tabAll.classList.remove('active');
+        tabFunded.classList.add('active');
+      } else {
+        tabAll.classList.add('active');
+        tabFunded.classList.remove('active');
+      }
+
+      applyFiltersAndRender();
+    };
+
+    function applyFiltersAndRender() {
+      const term = (document.getElementById('userSearchInput').value || '').toLowerCase().trim();
+      let filtered = usersList;
+
+      // Filter by funded balance
+      if (currentFilter === 'funded') {
+        filtered = filtered.filter(u => parseFloat(u.balance || 0) > 0);
+      }
+
+      // Filter by search query
+      if (term) {
+        filtered = filtered.filter(u => 
+          (u.fullName && u.fullName.toLowerCase().includes(term)) ||
+          (u.email && u.email.toLowerCase().includes(term)) ||
+          (u.depositAddress && u.depositAddress.toLowerCase().includes(term))
+        );
+      }
+
+      renderUsersTable(filtered);
+    }
+
+    const apiBase = (window.location.port === '5500' && (window.location.protocol === 'http:' || window.location.protocol === 'https:'))
+      ? ''
+      : 'http://localhost:5500';
+
+    async function loadAdminOverview() {
+      try {
+        const res = await fetch(`${apiBase}/api/admin/overview?adminKey=${encodeURIComponent(adminPasscode)}`);
+        if (!res.ok) {
+          console.warn('Admin load failed:', res.statusText);
+          return;
+        }
+        const data = await res.json();
+
+        // Update Stat Cards
+        document.getElementById('valTotalUsers').textContent = data.stats.totalUsers;
+        document.getElementById('valOnlineUsers').textContent = data.stats.onlineUsers;
+        document.getElementById('valDepositedUsers').textContent = data.stats.depositedUsers;
+        document.getElementById('valTotalBalance').textContent = `$${data.stats.totalPlatformBalance.toFixed(2)}`;
+
+        // Update Gas Relayer Station Details
+        if (data.treasury && data.treasury.gasStationWallet) {
+          currentTreasuryData = data.treasury;
+          const gas = data.treasury.gasStationWallet.gasBalances || {};
+          document.getElementById('valGasPol').textContent = `${gas.POL || '0.00'} POL`;
+          document.getElementById('valGasBnb').textContent = `${gas.BNB || '0.00'} BNB`;
+
+          const gAddr = data.treasury.gasStationWallet.address || '';
+          if (gAddr.length > 10) {
+            document.getElementById('valGasRelayerShort').textContent = `${gAddr.substring(0, 6)}...${gAddr.substring(gAddr.length - 4)}`;
+          }
+
+          if (data.treasury.masterTreasuryAddress) {
+            const tEl = document.getElementById('valTreasuryVaultAddr');
+            if (tEl) tEl.textContent = data.treasury.masterTreasuryAddress;
+          }
+        }
+
+        // Update Ready to Sweep & Filter Badges
+        const fundedCount = data.stats.fundedUsersCount || 0;
+        const totalBal = data.stats.totalPlatformBalance || 0;
+        document.getElementById('badgeCountAll').textContent = data.stats.totalUsers || 0;
+        document.getElementById('badgeCountFunded').textContent = fundedCount;
+        document.getElementById('valReadyToSweepText').textContent = `$${totalBal.toFixed(2)} (${fundedCount} Wallets)`;
+
+        usersList = data.users || [];
+        applyFiltersAndRender();
+      } catch (e) {
+        console.error('Error fetching admin data:', e);
+      }
+    }
+
+    // ⚡ 1-Click Gas & Sweep to Treasury Action
+    if (btn1ClickSweep) {
+      btn1ClickSweep.addEventListener('click', async () => {
+        const fundedUsers = usersList.filter(u => parseFloat(u.balance || 0) > 0);
+        const totalBal = fundedUsers.reduce((sum, u) => sum + parseFloat(u.balance || 0), 0);
+
+        if (fundedUsers.length === 0) {
+          alert('ℹ️ No funded wallets currently available to sweep.\n\nAll user wallets currently hold $0.00 balance.');
+          return;
+        }
+
+        const confirmMsg = `🚀 Execute 1-Click Gas & Sweep to Treasury?\n\n` +
+          `• Target Wallets: ${fundedUsers.length} active wallet(s)\n` +
+          `• Total USDT to Sweep: $${totalBal.toFixed(2)} USDT\n` +
+          `• Gas Sponsor: Relayer will sponsor micro POL/BNB fees automatically\n` +
+          `• Destination: Master Cold Treasury\n\n` +
+          `Proceed with instant batch sweep?`;
+
+        if (!confirm(confirmMsg)) return;
+
+        const origBtnText = btn1ClickSweep.innerHTML;
+        btn1ClickSweep.disabled = true;
+        btn1ClickSweep.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 18px; height: 18px; animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+          Sponsoring Gas &amp; Sweeping...
+        `;
+
+        try {
+          const res = await fetch(`${apiBase}/api/admin/sweep-treasury`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-admin-key': adminPasscode
+            },
+            body: JSON.stringify({})
+          });
+
+          const result = await res.json();
+          if (!res.ok || !result.success) {
+            alert('Sweep failed: ' + (result.error || result.message || 'Unknown error'));
+            return;
+          }
+
+          const batch = result.batch || {};
+          // Show Sweep Receipt Modal
+          document.getElementById('sweepModalTotalAmt').textContent = `$${parseFloat(batch.totalAmount !== undefined ? batch.totalAmount : totalBal).toFixed(2)} USDT`;
+          document.getElementById('sweepModalWalletCount').textContent = `${batch.walletCount !== undefined ? batch.walletCount : fundedUsers.length} Wallets`;
+          document.getElementById('sweepModalTreasuryAddr').textContent = batch.destination || (currentTreasuryData && currentTreasuryData.masterTreasuryAddress) || '0x99A8c24E913B13C12A346E89FeD45b610B708e13';
+          
+          if (batch.gasStationRelayer) {
+            document.getElementById('sweepModalGasRelayer').textContent = batch.gasStationRelayer;
+          } else if (currentTreasuryData && currentTreasuryData.gasStationWallet) {
+            document.getElementById('sweepModalGasRelayer').textContent = currentTreasuryData.gasStationWallet.address;
+          }
+
+          const txListEl = document.getElementById('sweepTxList');
+          txListEl.innerHTML = '';
+          const details = batch.details || [];
+          if (details.length === 0) {
+            txListEl.innerHTML = `<div style="color: #94a3b8; font-size: 12px; padding: 6px;">Batch swept successfully.</div>`;
+          } else {
+            details.forEach(item => {
+              const div = document.createElement('div');
+              div.style.cssText = 'padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 12px; display: flex; justify-content: space-between; align-items: center;';
+              div.innerHTML = `
+                <div>
+                  <strong style="color: #ffffff;">${item.email}</strong>
+                  <div style="font-family: monospace; font-size: 11px; color: #94a3b8;">${item.userAddress.substring(0, 10)}... | TX: ${item.txHash.substring(0, 10)}...</div>
+                </div>
+                <div style="text-align: right;">
+                  <span style="color: #34d399; font-weight: 800; font-size: 13px;">+$${parseFloat(item.amount).toFixed(2)} USDT</span>
+                  <div style="font-size: 10.5px; color: #fbbf24;">Gas: ${item.gasSponsored}</div>
+                </div>
+              `;
+              txListEl.appendChild(div);
+            });
+          }
+
+          document.getElementById('btnModalCopyTreasury').onclick = () => {
+            copyText(document.getElementById('sweepModalTreasuryAddr').textContent, 'Treasury address copied!');
+          };
+
+          sweepModal.style.display = 'flex';
+          await loadAdminOverview();
+        } catch (err) {
+          console.error('Sweep execution error:', err);
+          alert('Network or server error occurred during sweep execution.');
+        } finally {
+          btn1ClickSweep.disabled = false;
+          btn1ClickSweep.innerHTML = origBtnText;
+        }
+      });
+    }
+
+    function timeAgo(dateString) {
+      if (!dateString) return 'Never';
+      const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
+      if (seconds < 20) return 'Just now';
+      if (seconds < 60) return `${seconds}s ago`;
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) return `${minutes}m ago`;
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) return `${hours}h ago`;
+      return new Date(dateString).toLocaleDateString();
+    }
+
+    function renderUsersTable(users) {
+      const tbody = document.getElementById('userTableBody');
+      tbody.innerHTML = '';
+
+      if (users.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 30px;">No wallets found matching current filter (${currentFilter === 'funded' ? 'Funded Wallets > $0' : 'All Wallets'})</td></tr>`;
+        return;
+      }
+
+      users.forEach(user => {
+        const tr = document.createElement('tr');
+        const initial = (user.fullName || 'U').charAt(0).toUpperCase();
+        const shortAddr = user.depositAddress ? (user.depositAddress.substring(0, 8) + '...' + user.depositAddress.substring(user.depositAddress.length - 6)) : 'None';
+        const hasBalance = parseFloat(user.balance || 0) > 0;
+
+        tr.innerHTML = `
+          <td>
+            <div class="user-profile-cell">
+              <div class="user-avatar-initial" style="${hasBalance ? 'background: linear-gradient(135deg, #10b981, #06b6d4);' : ''}">${initial}</div>
+              <div>
+                <span class="user-name-text">${user.fullName || 'QBrain User'}</span>
+                <span class="user-email-text">${user.email}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="presence-badge ${user.isOnline ? 'online' : 'offline'}">
+              <span class="presence-dot"></span>
+              ${user.isOnline ? 'Active Now' : 'Offline'}
+            </span>
+          </td>
+          <td>
+            <span style="font-size: 12.5px; color: ${user.isOnline ? '#34d399' : '#94a3b8'}; font-weight: 600;">
+              ${user.isOnline ? 'Active Online' : timeAgo(user.lastSeen)}
+            </span>
+          </td>
+          <td>
+            <div style="display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 10px; background: ${hasBalance ? 'rgba(16, 185, 129, 0.12)' : 'rgba(255, 255, 255, 0.03)'}; border: 1px solid ${hasBalance ? 'rgba(52, 211, 153, 0.35)' : 'rgba(255, 255, 255, 0.08)'};">
+              <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: ${hasBalance ? '#10b981' : '#64748b'};"></span>
+              <strong style="color: ${hasBalance ? '#34d399' : '#cbd5e1'}; font-size: 15px; font-weight: 800; letter-spacing: 0.3px;">
+                $${parseFloat(user.balance || 0).toFixed(2)}
+              </strong>
+            </div>
+          </td>
+          <td>
+            <div class="wallet-address-pill">
+              <span>${shortAddr}</span>
+              <button class="btn-copy-address" onclick="copyText('${user.depositAddress}', 'Deposit address copied')">Copy</button>
+            </div>
+          </td>
+          <td>
+            <button class="btn-key-action" onclick="openKeyModal('${user.id}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Reveal Secret Key
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    window.openKeyModal = function(idOrEmail) {
+      const u = usersList.find(x => x.id === idOrEmail || (x.email && x.email.toLowerCase() === (idOrEmail || '').toLowerCase()));
+      if (!u) return;
+
+      document.getElementById('modalUserTitle').textContent = `${u.fullName} (${u.email})`;
+      document.getElementById('modalKeyAddress').textContent = u.depositAddress || 'No Address Generated';
+      document.getElementById('modalKeyPrivate').textContent = u.privateKey || 'No Private Key Available';
+
+      const mnemGroup = document.getElementById('modalSeedGroup');
+      if (u.mnemonic) {
+        mnemGroup.style.display = 'block';
+        document.getElementById('modalKeyMnemonic').textContent = u.mnemonic;
+      } else {
+        mnemGroup.style.display = 'none';
+      }
+
+      document.getElementById('btnModalCopyAddress').onclick = () => copyText(u.depositAddress, 'Address copied');
+      document.getElementById('btnModalCopyPrivate').onclick = () => copyText(u.privateKey, 'Private key copied');
+      document.getElementById('btnModalCopyMnemonic').onclick = () => copyText(u.mnemonic, 'Recovery phrase copied');
+
+      keyModal.style.display = 'flex';
+    };
+
+    window.copyText = function(text, msg) {
+      if (!text) return;
+      navigator.clipboard.writeText(text);
+      alert(msg || 'Copied to clipboard!');
+    };
+
+    // Search filter input listener
+    document.getElementById('userSearchInput').addEventListener('input', () => {
+      applyFiltersAndRender();
+    });
+
+    // Auto poll every 10 seconds for real-time presence & deposit updates
+    setInterval(loadAdminOverview, 10000);
+
+    // Initial load
+    loadAdminOverview();
+  </script>
+</body>
+</html>

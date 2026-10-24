@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f2048"/>
+      <stop offset="45%" stop-color="#09132c"/>
+      <stop offset="100%" stop-color="#040816"/>
+    </linearGradient>
+
+    <!-- Border Glow Gradient -->
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+
+    <!-- Primary Q Gradient: Electric Cyan to Royal Cobalt -->
+    <linearGradient id="qGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe"/>
+      <stop offset="35%" stop-color="#38bdf8"/>
+      <stop offset="85%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+
+    <!-- Q Inner Depth Gradient -->
+    <radialGradient id="innerGlow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="rgba(0, 242, 254, 0.25)"/>
+      <stop offset="100%" stop-color="rgba(0, 0, 0, 0)"/>
+    </radialGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="shadowQ" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#00f2fe" flood-opacity="0.35"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <!-- Squircle Base for App Icon & Site Logo -->
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="6"/>
+  <rect x="22" y="22" width="468" height="468" rx="106" fill="url(#innerGlow)" pointer-events="none"/>
+
+  <!-- Futuristic Majestic 'Q' Mark -->
+  <g filter="url(#shadowQ)" transform="translate(256, 256)">
+    <!-- Outer Ring of Q -->
+    <path d="M 0 -130 
+             C 71.8 -130, 130 -71.8, 130 0 
+             C 130 38.6, 113.2 73.3, 86.4 97.2 
+             L 125 135.8 
+             C 131.2 142, 131.2 152, 125 158.2 
+             C 118.8 164.4, 108.8 164.4, 102.6 158.2 
+             L 66.8 122.4 
+             C 46.5 130.3, 24 134.8, 0 134.8 
+             C -71.8 134.8, -130 76.6, -130 4.8 
+             C -130 -67, -71.8 -130, 0 -130 Z
+             M 0 -68 
+             C -37.5 -68, -68 -37.5, -68 0 
+             C -68 37.5, -37.5 68, 0 68 
+             C 17.6 68, 33.6 61.3, 45.6 50.3 
+             L 28.5 33.2 
+             C 24 28.7, 24 21.3, 28.5 16.8 
+             C 33 12.3, 40.4 12.3, 44.9 16.8 
+             L 60.2 32.1 
+             C 65.2 22.4, 68 11.5, 68 0 
+             C 68 -37.5, 37.5 -68, 0 -68 Z" 
+          fill="url(#qGrad)"/>
+    
+    <!-- Dynamic Electric Accent inside Q tail -->
+    <path d="M 46 56 L 118 128" stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>

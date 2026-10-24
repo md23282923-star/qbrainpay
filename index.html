@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#060b18" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="QBrain Pay" />
+  <meta name="application-name" content="QBrain Pay" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>QBrain Pay - Global Payments</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+  <link rel="stylesheet" href="style.css?v=20261020_modern_v2" />
+</head>
+<body>
+  <!-- Mobile Container Wrapper for Responsive & App Simulation -->
+  <div class="app-container">
+    
+    <!-- =====================================================================
+         PAGE 0: AUTHENTICATION / ONBOARDING SCREEN (#authPage)
+         Modern Luxury Vertical Card Showcase • Clean Email OTP & Google
+         ===================================================================== -->
+    <div id="authPage" class="app-page active">
+      <div class="auth-wrapper solid-auth-wrapper">
+
+        <!-- VIEW A: WELCOME SHOWCASE TEASER (Full-Bleed Seamless Vertical Card Showcase) -->
+        <div id="authViewShowcase" class="auth-view-panel welcome-fullscreen-panel">
+          
+          <!-- Full-Bleed Absolute Background Layer with Zero Border -->
+          <div class="welcome-bg-backdrop"></div>
+
+          <!-- Top Brand Header with Universal Logo -->
+          <header class="showcase-top-header">
+            <div class="universal-brand-mark">
+              <img src="logo.svg" alt="QBrain Pay Logo" class="universal-logo-sq" />
+              <span class="universal-brand-text">QBrain <span class="brand-blue">Pay</span></span>
+            </div>
+          </header>
+
+          <!-- Middle Spacer allowing the central 3D card in the backdrop to shine -->
+          <div class="splash-card-spacer"></div>
+
+          <!-- Bottom Action Area -->
+          <div class="welcome-bottom-tray">
+            <div class="welcome-tray-text">
+              <h2 class="welcome-main-title">$1 Card is ready</h2>
+              <p class="welcome-main-desc">Instant global payments &amp; dedicated crypto wallet</p>
+            </div>
+            <button type="button" id="btnSlideToAuth" class="btn-claim-card-cta">
+              <span>Claim $1 Card</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="cta-arrow-svg"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- VIEW B: AUTHENTICATION FORM (Generous, Well-Proportioned Luxury Card) -->
+        <div id="authViewForm" class="auth-view-panel auth-centered-panel" style="display: none;">
+          
+          <!-- Top Brand Header -->
+          <header class="showcase-top-header">
+            <div class="universal-brand-mark">
+              <img src="logo.svg" alt="QBrain Pay Logo" class="universal-logo-sq" />
+              <span class="universal-brand-text">QBrain <span class="brand-blue">Pay</span></span>
+            </div>
+          </header>
+
+          <!-- Centered Unified Card (Proportionate, Full & Solid) -->
+          <div class="auth-unified-center-card">
+            
+            <div class="auth-card-top-icon">
+              <img src="logo.svg" alt="QBrain Icon" class="auth-card-brand-badge" />
+            </div>
+
+            <div class="auth-card-titles">
+              <h2 id="authFormTitle" class="solid-auth-heading">Get Started</h2>
+              <p id="authFormSub" class="solid-auth-subheading">Enter your email to access your $1 Card &amp; Wallet</p>
+            </div>
+
+            <!-- Email OTP Flow -->
+            <div id="authEmailSection">
+              <!-- Step 1: Input Email -->
+              <div id="authEmailStep1">
+                <div class="solid-input-wrap">
+                  <input type="email" id="authEmailInput" placeholder="name@email.com" class="solid-text-input" autocomplete="email" />
+                </div>
+                <button type="button" id="btnSendEmailOtp" class="btn-solid-primary">
+                  <span>Continue with Email</span>
+                </button>
+              </div>
+
+              <!-- Step 2: Input 6-Digit OTP -->
+              <div id="authEmailStep2" style="display: none;">
+                <div class="otp-header-row">
+                  <span id="authOtpTargetEmail" class="otp-target-label"></span>
+                  <button type="button" id="btnChangeAuthEmail" class="btn-change-email">Change</button>
+                </div>
+                <div class="solid-input-wrap">
+                  <input type="text" id="authOtpInput" maxlength="6" placeholder="• • • • • •" class="solid-otp-input" inputmode="numeric" />
+                </div>
+                <button type="button" id="btnVerifyEmailOtp" class="btn-solid-primary verify-btn">
+                  <span>Verify Code</span>
+                </button>
+                <div class="resend-countdown-wrap">
+                  <span id="authResendCountdown">Resend code in 60s</span>
+                </div>
+              </div>
+
+              <div id="authOtpFeedback" class="solid-feedback-msg" style="display: none;"></div>
+            </div>
+
+            <!-- Subtle Clean Divider -->
+            <div class="solid-or-divider">
+              <span class="divider-line"></span>
+              <span class="divider-label">or</span>
+              <span class="divider-line"></span>
+            </div>
+
+            <!-- Google Sign-In Button (Sitting nicely below divider) -->
+            <button type="button" class="btn-solid-google" id="btnGoogleLogin">
+              <div class="google-icon-box">
+                <svg viewBox="0 0 24 24" class="google-svg">
+                  <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                  <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                  <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                  <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                </svg>
+              </div>
+              <span class="google-btn-text">Continue with Google</span>
+            </button>
+
+            <!-- Reassuring Security Footer -->
+            <div class="auth-card-security-footer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sec-shield-svg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>Bank-Grade Encryption • Dedicated Wallet</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- VIEW C: NEW USER ONBOARDING (Name + Age 18-80 + "Claim $1 Card") -->
+        <div id="authViewNewUser" class="auth-view-panel auth-centered-panel" style="display: none;">
+          
+          <header class="showcase-top-header">
+            <div class="universal-brand-mark">
+              <img src="logo.svg" alt="QBrain Pay Logo" class="universal-logo-sq" />
+              <span class="universal-brand-text">QBrain <span class="brand-blue">Pay</span></span>
+            </div>
+          </header>
+
+          <div class="auth-unified-center-card">
+            <div class="auth-card-top-icon">
+              <img src="logo.svg" alt="QBrain Icon" class="auth-card-brand-badge" />
+            </div>
+
+            <div class="auth-card-titles">
+              <h2 class="solid-auth-heading">Profile Setup</h2>
+              <p class="solid-auth-subheading">Just 2 details to activate your dedicated wallet</p>
+            </div>
+
+            <!-- Full Name Input -->
+            <div class="form-group-minimal">
+              <label class="minimal-label">Legal Name</label>
+              <input type="text" id="authNewFullName" placeholder="e.g. Md Khalid Hasan" class="solid-text-input" />
+            </div>
+
+            <!-- Age Selection: 18 to 80 Scroll Picker -->
+            <div class="form-group-minimal">
+              <div class="label-with-badge">
+                <label class="minimal-label">Age</label>
+                <span id="authSelectedAgeBadge" class="age-badge-highlight">24 Years</span>
+              </div>
+              <div class="solid-select-wrapper">
+                <select id="authAgeSelect" class="solid-select-input">
+                  <!-- Dynamically populated 18 to 80 via JS -->
+                </select>
+                <span class="select-caret">▾</span>
+              </div>
+            </div>
+
+            <!-- Agreement Checkbox -->
+            <div class="agreement-box-minimal">
+              <label class="agreement-label">
+                <input type="checkbox" id="authTermsCheck" checked class="minimal-checkbox" />
+                <span class="agreement-text">I confirm I am over 18 and accept the terms of service.</span>
+              </label>
+            </div>
+
+            <!-- "Claim $1 Card" as user specified -->
+            <button type="button" id="btnCompleteNewUserReg" class="btn-solid-primary complete-reg-btn">
+              <span>Claim $1 Card</span>
+            </button>
+            <div id="authNewUserFeedback" class="solid-feedback-msg" style="display: none;"></div>
+
+            <!-- Reassuring Security Footer -->
+            <div class="auth-card-security-footer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sec-shield-svg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>100% Guaranteed On-Chain Crypto Wallet</span>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- /.auth-wrapper -->
+    </div> <!-- /#authPage -->
+
+
+
+    <!-- PAGE 1: HOME PAGE VIEW -->
+    <div id="homePage" class="app-page">
+      <!-- Top Header Area with Night Sky & Subtle Ambient Glow -->
+      <header class="top-header">
+      <div class="brand-info">
+        <div class="brand-logo">
+          <!-- Universal Luxury Q Icon -->
+          <div class="logo-icon-wrap">
+            <img src="logo.svg" alt="QBrain Pay Logo" class="universal-logo-sq" />
+          </div>
+          <div class="brand-text">
+            <h1 class="brand-title">QBrain <span class="pay-text">Pay</span></h1>
+            <p class="brand-tagline">Global Payments • Faster • Safer</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Notification Button with Red Badge -->
+        <button class="icon-btn notif-btn" id="notifBtn" aria-label="Notifications">
+          <svg class="header-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span class="badge-dot" style="display: none;"></span>
+        </button>
+
+        <!-- Profile Avatar Button -->
+        <button class="icon-btn profile-btn" id="profileBtn" aria-label="User Profile">
+          <div class="avatar-gradient">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrollable Main Content -->
+    <main class="main-content">
+      
+      <!-- Total Balance Card -->
+      <section class="balance-card-container">
+        <div class="balance-card">
+          <!-- Holographic Wave Mesh Watermark -->
+          <div class="balance-card-bg-wave">
+            <svg viewBox="0 0 360 180" class="wave-lines-svg" fill="none">
+              <path d="M140 180C170 120 220 90 360 70" stroke="rgba(255,255,255,0.16)" stroke-width="1.8" />
+              <path d="M160 180C190 130 240 105 360 90" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" />
+              <path d="M180 180C210 140 260 120 360 110" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+              <path d="M200 180C230 150 280 135 360 130" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" />
+              <circle cx="310" cy="50" r="80" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" />
+            </svg>
+          </div>
+
+          <div class="balance-content">
+            <div class="balance-info">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                <span class="balance-label" style="margin-bottom: 0;">Total Balance</span>
+                <!-- Live Confirming / Pending Deposit Indicator Pill -->
+                <div class="deposit-pending-pill hidden" id="homePendingDepositPill">
+                  <span class="pending-spinner-dot"></span>
+                  <span class="pending-pill-text" id="homePendingPillText">Pending: $1.00</span>
+                </div>
+              </div>
+              <div class="balance-amount-row">
+                <span class="balance-amount" id="balanceAmount">$0.00</span>
+                <button class="eye-toggle-btn" id="toggleBalance" aria-label="Toggle balance visibility">
+                  <svg id="eyeOpenIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3.2"></circle>
+                  </svg>
+                  <svg id="eyeClosedIcon" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+              <div class="balance-trend">
+                <span class="trend-icon">●</span>
+                <span class="trend-text">Active USDT Wallet</span>
+              </div>
+            </div>
+
+            <!-- Tactile Frosted Wallet Medallion -->
+            <div class="balance-wallet-badge">
+              <div class="wallet-icon-circle">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M21 7.28V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-2.28c.59-.35 1-.98 1-1.72V9c0-.74-.41-1.37-1-1.72zM20 9v6h-7V9h7zM5 19V5h14v2h-6c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h6v2H5z"/>
+                  <circle cx="16" cy="12" r="1.3"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Primary Action Buttons (Deposit, Send, Withdraw) -->
+      <section class="primary-actions-section">
+        <div class="primary-actions-grid primary-actions-3">
+          
+          <!-- 1. Deposit (Arrow into Tray) -->
+          <button class="action-btn" id="btnDeposit">
+            <div class="action-icon-circle deposit-grad">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+                <path d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5" />
+                <path d="M5 14.5v3a2 2 0 002 2h10a2 2 0 002-2v-3" />
+              </svg>
+            </div>
+            <span class="action-label">Deposit</span>
+          </button>
+
+          <!-- 2. Send (Paper Plane) -->
+          <button class="action-btn" id="btnSend">
+            <div class="action-icon-circle send-grad">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+                <path d="M22 2L11 13" />
+                <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+              </svg>
+            </div>
+            <span class="action-label">Send</span>
+          </button>
+
+          <!-- 3. Withdraw (Cash Banknote Bill) -->
+          <button class="action-btn" id="btnWithdraw">
+            <div class="action-icon-circle withdraw-grad">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+                <rect x="2.5" y="6" width="19" height="12" rx="2.5" />
+                <circle cx="12" cy="12" r="2.5" stroke-width="2" />
+                <line x1="5.5" y1="12" x2="6.5" y2="12" stroke-width="2.5" />
+                <line x1="17.5" y1="12" x2="18.5" y2="12" stroke-width="2.5" />
+              </svg>
+            </div>
+            <span class="action-label">Withdraw</span>
+          </button>
+
+        </div>
+      </section>
+
+      <!-- Quick Access Section -->
+      <section class="section-container quick-access-section">
+        <h2 class="section-title">Quick Access</h2>
+        <div class="quick-access-grid">
+          
+          <!-- Transfer / Send -->
+          <button class="quick-btn" id="qaTransfer">
+            <div class="quick-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </div>
+            <span class="quick-label">Transfer</span>
+          </button>
+
+          <!-- Swap / Convert -->
+          <button class="quick-btn" id="qaConvert">
+            <div class="quick-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+                <path d="M7 16V4m0 0L3 8m4-4l4 4m6 4v12m0 0l4-4m-4 4l-4-4"/>
+              </svg>
+            </div>
+            <span class="quick-label">Convert</span>
+          </button>
+
+          <!-- Statement / Transactions -->
+          <button class="quick-btn" id="qaTransactions">
+            <div class="quick-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+                <path d="M14 2.5H6.5A2.5 2.5 0 004 5v14a2.5 2.5 0 002.5 2.5h11A2.5 2.5 0 0020 19V8.5L14 2.5z" />
+                <path d="M14 2.5V8.5H20" />
+                <line x1="8" y1="13" x2="16" y2="13" />
+                <line x1="8" y1="16.5" x2="13" y2="16.5" />
+              </svg>
+            </div>
+            <span class="quick-label">Statement</span>
+          </button>
+
+          <!-- Support (Rounded Chat Speech Bubble) -->
+          <button class="quick-btn" id="qaSupport">
+            <div class="quick-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+                <path d="M12 20.5a8.5 8.5 0 10-6.8-3.4L3.5 20.5l4-1.2A8.45 8.45 0 0012 20.5z" />
+              </svg>
+            </div>
+            <span class="quick-label">Support</span>
+          </button>
+
+        </div>
+      </section>
+
+      <!-- Recent Transactions Section -->
+      <section class="section-container recent-transactions-section">
+        <div class="section-header">
+          <h2 class="section-title">Recent Transactions</h2>
+          <a href="#" class="view-all-link" id="viewAllTrans">
+            View All <span class="chevron-right">›</span>
+          </a>
+        </div>
+
+        <div class="transactions-list" id="homeTransactionsList">
+          <div class="empty-transactions-box" id="emptyTransactionsState">
+            <div class="empty-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="empty-tx-svg">
+                <rect x="2" y="4" width="20" height="16" rx="3"></rect>
+                <path d="M7 15h10M7 9h6"></path>
+              </svg>
+            </div>
+            <p class="empty-title">No transactions yet</p>
+            <p class="empty-sub">Your deposits and transfers will show up here</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Extra spacer for bottom navigation padding -->
+      <div class="bottom-spacer"></div>
+
+    </main>
+    </div>
+
+    <!-- PAGE 2: CARDS PAGE (SUPPORTS BOTH PURCHASED & UNPURCHASED STATES) -->
+    <div id="cardsPage" class="app-page state-unpurchased page-bg-magenta">
+      
+      <!-- =====================================================================
+           SUBVIEW 1: PURCHASED ACTIVE STATE ("My Cards" - Matching Reference Screenshot)
+           ===================================================================== -->
+      <div id="cardsPurchasedView" class="cards-subview">
+        
+        <!-- Top Bar: My Card Header -->
+        <header class="my-cards-header">
+          <h1 class="my-cards-title">Virtual Card</h1>
+          <div class="my-cards-header-actions">
+            <!-- Notifications Button -->
+            <button class="header-action-glass-btn" id="myCardsNotifBtn" aria-label="Notifications">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+              </svg>
+              <span class="header-notif-dot"></span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Scrollable Body Content for My Cards -->
+        <div class="my-cards-scrollable">
+
+          <!-- Card Status & Quick Balance Pill -->
+          <div class="my-card-status-bar">
+            <div class="status-left">
+              <span class="status-pulse-dot"></span>
+              <span class="status-pill-text">Active Virtual Platinum</span>
+            </div>
+            <div class="status-right">
+              <span class="card-balance-label">Balance</span>
+              <span class="card-balance-num">$0.00</span>
+            </div>
+          </div>
+
+          <!-- Active Card Showcase (Exact same card chosen/purchased by user) -->
+          <div class="my-cards-card-wrap">
+            <div class="card-slide theme-magenta active" id="myPurchasedCard">
+              <div class="card-gloss-sheen"></div>
+
+              <!-- FROZEN OVERLAY (Visible only when frozen) -->
+              <div class="card-frozen-overlay hidden" id="cardFrozenOverlay">
+                <div class="frozen-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="frozen-icon">
+                    <line x1="12" y1="2" x2="12" y2="22"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <line x1="20" y1="16" x2="12" y2="12"/>
+                    <line x1="4" y1="8" x2="12" y2="12"/>
+                    <line x1="20" y1="8" x2="12" y2="12"/>
+                    <line x1="4" y1="16" x2="12" y2="12"/>
+                    <path d="m10 4 2-2 2 2"/>
+                    <path d="m10 20 2 2 2-2"/>
+                    <path d="m4 10-2 2 2 2"/>
+                    <path d="m20 10 2 2-2 2"/>
+                  </svg>
+                  <span>CARD FROZEN</span>
+                </div>
+                <p class="frozen-hint">Tap Freeze to unlock</p>
+              </div>
+              
+              <!-- TOP BRANDING ROW -->
+              <div class="card-brand-row">
+                <div class="card-qbrain-logo" style="display: flex; align-items: center; gap: 7px;">
+                  <img src="logo.svg" alt="Q" style="width: 22px; height: 22px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0, 242, 254, 0.4);" />
+                  <div>
+                    <span class="card-q-text">QBrain</span>
+                    <span class="card-pay-text">Pay</span>
+                  </div>
+                </div>
+                <div class="visa-logo-wrap">
+                  <span class="visa-text">VISA</span>
+                </div>
+              </div>
+
+              <!-- CHIP, CONTACTLESS & CVV ROW -->
+              <div class="card-chip-row">
+                <div class="emv-chip">
+                  <div class="chip-line horizontal"></div>
+                  <div class="chip-line vertical"></div>
+                  <div class="chip-core"></div>
+                </div>
+                <div class="contactless-waves">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+                    <path d="M8.5 8.5a5 5 0 0 1 0 7" />
+                    <path d="M12 6a8.5 8.5 0 0 1 0 12" />
+                    <path d="M15.5 3.5a12 12 0 0 1 0 17" />
+                  </svg>
+                </div>
+                <div class="card-cvv-pill" id="purchasedCvvPill">
+                  <span class="cvv-tag">CVV</span>
+                  <span class="cvv-val" id="purchasedCvvVal">842</span>
+                </div>
+              </div>
+
+              <!-- CARD NUMBER -->
+              <div class="card-number-display" id="purchasedCardNumber">
+                <span class="num-grp">4829</span>
+                <span class="num-grp">9862</span>
+                <span class="num-grp">3745</span>
+                <span class="num-grp">1289</span>
+              </div>
+
+              <!-- BOTTOM ROW: Expiry & Cardholder Name -->
+              <div class="card-bottom-info">
+                <div class="card-exp-row">
+                  <span class="exp-label">VALID THRU</span>
+                  <span class="exp-val" id="purchasedExpVal">10/29</span>
+                </div>
+                <div class="cardholder-name" id="purchasedCardholderName">QBrain User</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 Circular Quick Action Buttons (View, Freeze, Limit, Settings) -->
+          <div class="card-quick-actions">
+            <!-- 1. View -->
+            <button class="action-circle-item" id="btnActionView">
+              <div class="action-circle-btn">
+                <svg id="viewIconOpen" viewBox="0 0 24 24" class="action-svg" fill="none">
+                  <path d="M1 12C3.5 6.5 7.5 3.5 12 3.5s8.5 3 11 8.5c-2.5 5.5-6.5 8.5-11 8.5S3.5 17.5 1 12Z" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="4.2" fill="#2563eb"/>
+                  <circle cx="13.2" cy="10.8" r="1.4" fill="#ffffff"/>
+                </svg>
+                <svg id="viewIconClosed" class="action-svg hidden" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 12C4.8 8.2 8 5.8 12 5.8c1.6 0 3.2.4 4.6 1.2M21 12c-1.5 3.2-4.2 5.5-9 5.5-1.8 0-3.5-.4-4.9-1.3" stroke="#64748b" stroke-width="2.2" stroke-linecap="round"/>
+                  <circle cx="12" cy="12" r="3.8" stroke="#64748b" stroke-width="2"/>
+                  <line x1="2.5" y1="2.5" x2="21.5" y2="21.5" stroke="#ef4444" stroke-width="2.4" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <span class="action-label" id="lblActionView">View</span>
+            </button>
+
+            <!-- 2. Freeze -->
+            <button class="action-circle-item" id="btnActionFreeze">
+              <div class="action-circle-btn">
+                <svg viewBox="0 0 24 24" class="action-svg" fill="none">
+                  <line x1="12" y1="2.5" x2="12" y2="21.5" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round"/>
+                  <line x1="4" y1="7.5" x2="20" y2="16.5" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round"/>
+                  <line x1="4" y1="16.5" x2="20" y2="7.5" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round"/>
+                  <path d="M9 4.5L12 2l3 2.5M9 19.5L12 22l3-2.5" stroke="#0284c7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M5.5 10.5L3.5 7.5l4-.5M18.5 13.5l2 3-4 .5" stroke="#0284c7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M5.5 13.5L3.5 16.5l4 .5M18.5 10.5l2-3-4-.5" stroke="#0284c7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polygon points="12,8.5 15.5,12 12,15.5 8.5,12" fill="#38bdf8" stroke="#0284c7" stroke-width="1.2"/>
+                  <circle cx="12" cy="12" r="1.5" fill="#ffffff"/>
+                </svg>
+              </div>
+              <span class="action-label" id="lblActionFreeze">Freeze</span>
+            </button>
+
+            <!-- 3. Limit -->
+            <button class="action-circle-item" id="btnActionLimit">
+              <div class="action-circle-btn">
+                <svg viewBox="0 0 24 24" class="action-svg" fill="none">
+                  <path d="M4 17A9 9 0 1 1 20 17" stroke="#cbd5e1" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M4 17A9 9 0 0 1 17.5 6.5" stroke="#8b5cf6" stroke-width="2.8" stroke-linecap="round"/>
+                  <circle cx="12" cy="14" r="2.8" fill="#7c3aed"/>
+                  <line x1="12" y1="14" x2="16.5" y2="8.5" stroke="#7c3aed" stroke-width="2.4" stroke-linecap="round"/>
+                  <circle cx="12" cy="14" r="1" fill="#ffffff"/>
+                </svg>
+              </div>
+              <span class="action-label">Limit</span>
+            </button>
+
+            <!-- 4. Settings -->
+            <button class="action-circle-item" id="btnActionSettings">
+              <div class="action-circle-btn">
+                <svg viewBox="0 0 24 24" class="action-svg" fill="none">
+                  <path d="M10.5 3h3l.5 2a7 7 0 0 1 1.8.8l1.9-1 2.1 2.1-1 1.9c.3.6.6 1.2.8 1.8l2 .5v3l-2 .5a7 7 0 0 1-.8 1.8l1 1.9-2.1 2.1-1.9-1a7 7 0 0 1-1.8.8l-.5 2h-3l-.5-2a7 7 0 0 1-1.8-.8l-1.9 1-2.1-2.1 1-1.9a7 7 0 0 1-.8-1.8l-2-.5v-3l2-.5a7 7 0 0 1 .8-1.8l-1-1.9 2.1-2.1 1.9 1a7 7 0 0 1 1.8-.8l.5-2Z" 
+                    stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="3.2" fill="#475569"/>
+                  <circle cx="12" cy="12" r="1.3" fill="#ffffff"/>
+                </svg>
+              </div>
+              <span class="action-label">Settings</span>
+            </button>
+          </div>
+
+
+          <!-- Recent Transactions Section -->
+          <div class="my-cards-transactions-section">
+            <div class="section-header-row">
+              <h3 class="section-title">Transactions</h3>
+              <a href="#transactions" class="view-all-link">View all &gt;</a>
+            </div>
+
+            <div class="my-cards-tx-list" id="cardTransactionsList">
+              <div class="empty-transactions-box" id="emptyCardTransactionsState">
+                <div class="empty-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="empty-tx-svg">
+                    <rect x="2" y="4" width="20" height="16" rx="3"></rect>
+                    <path d="M7 15h10M7 9h6"></path>
+                  </svg>
+                </div>
+                <p class="empty-title">No transactions yet</p>
+                <p class="empty-sub">Your card transactions will appear here</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom spacing for floating navigation bar -->
+          <div class="bottom-spacer"></div>
+        </div>
+
+      </div>
+
+      <!-- =====================================================================
+           SUBVIEW 2: UNPURCHASED ONBOARDING STATE ("Choose Card" / Apply $10)
+           ===================================================================== -->
+      <div id="cardsUnpurchasedView" class="cards-subview active">
+        
+        <!-- Top Bar: Back Button, Title, Chat Support -->
+        <header class="cards-header">
+          <button class="back-nav-btn" id="cardsBackBtn" aria-label="Go Back to Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <h1 class="cards-header-title">Virtual Card</h1>
+          <button class="header-support-btn" id="cardsSupportBtn" aria-label="Support">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20.5a8.5 8.5 0 10-6.8-3.4L3.5 20.5l4-1.2A8.45 8.45 0 0012 20.5z" />
+            </svg>
+          </button>
+        </header>
+
+        <!-- Main Cards Content -->
+        <main class="cards-main-content">
+
+          <!-- Centered Single Card Showcase (Obsidian Matte Titanium) -->
+          <div class="card-center-stage">
+            <div class="single-card-showcase-wrap">
+              <div class="card-slide theme-slate active" id="unpurchasedSingleCard">
+                <div class="card-gloss-sheen"></div>
+                
+                <!-- TOP BRANDING ROW -->
+                <div class="card-brand-row">
+                  <div class="card-qbrain-logo" style="display: flex; align-items: center; gap: 7px;">
+                    <img src="logo.svg" alt="Q" style="width: 22px; height: 22px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0, 242, 254, 0.4);" />
+                    <div>
+                      <span class="card-q-text">QBrain</span>
+                      <span class="card-pay-text">Pay</span>
+                    </div>
+                  </div>
+                  <div class="visa-logo-wrap">
+                    <span class="visa-text">VISA</span>
+                  </div>
+                </div>
+
+                <!-- CHIP, CONTACTLESS & CVV ROW -->
+                <div class="card-chip-row">
+                  <div class="emv-chip gold-emv">
+                    <div class="chip-line horizontal"></div>
+                    <div class="chip-line vertical"></div>
+                    <div class="chip-core"></div>
+                  </div>
+                  <div class="contactless-waves">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+                      <path d="M8.5 8.5a5 5 0 0 1 0 7" />
+                      <path d="M12 6a8.5 8.5 0 0 1 0 12" />
+                      <path d="M15.5 3.5a12 12 0 0 1 0 17" />
+                    </svg>
+                  </div>
+                  <div class="card-cvv-pill clickable" id="unpurchasedCvvPill" role="button" tabindex="0" title="Click to Setup CVV">
+                    <span class="cvv-tag">CVV</span>
+                    <span class="cvv-val" id="unpurchasedCvvVal">Setup</span>
+                  </div>
+                </div>
+
+                <!-- CARD NUMBER (PREVIEW MASKED) -->
+                <div class="card-number-display">
+                  <span class="num-grp">4829</span>
+                  <span class="num-grp">••••</span>
+                  <span class="num-grp">••••</span>
+                  <span class="num-grp">••••</span>
+                </div>
+
+                <!-- BOTTOM ROW -->
+                <div class="card-bottom-info">
+                  <div class="card-exp-row">
+                    <span class="exp-label">VALID THRU</span>
+                    <span class="exp-val" id="unpurchasedExpVal">10/29</span>
+                  </div>
+                  <div class="cardholder-name" id="unpurchasedCardholderName">QBrain User</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3 Clear Prerequisites to Unlock & Personalize Card -->
+            <div class="card-steps-container">
+              <span class="card-steps-header">Complete 3 Steps to Activate Card</span>
+
+              <!-- Step 1: Deposit $1.00 -->
+              <div class="card-step-card" id="cardStepDeposit">
+                <div class="card-step-left">
+                  <div class="step-icon-wrap" id="stepDepositIconBox">
+                    <span class="step-num">1</span>
+                  </div>
+                  <div class="step-meta">
+                    <span class="step-title" id="stepDepositTitle">Deposit $1.00 USDT</span>
+                    <span class="step-sub" id="stepDepositSub">Add $1 to cover card issuance fee</span>
+                  </div>
+                </div>
+                <div class="step-status-tag step-pending" id="stepDepositTag">Deposit $1</div>
+              </div>
+
+              <!-- Step 2: Verify Face Scan -->
+              <div class="card-step-card" id="cardStepFace">
+                <div class="card-step-left">
+                  <div class="step-icon-wrap" id="stepFaceIconBox">
+                    <span class="step-num">2</span>
+                  </div>
+                  <div class="step-meta">
+                    <span class="step-title" id="stepFaceTitle">Verify Face Scan</span>
+                    <span class="step-sub" id="stepFaceSub">30s biometric front camera check</span>
+                  </div>
+                </div>
+                <div class="step-status-tag step-required" id="stepFaceTag">Scan Face</div>
+              </div>
+
+              <!-- Step 3: Setup CVV -->
+              <div class="card-step-card" id="cardStepCvv">
+                <div class="card-step-left">
+                  <div class="step-icon-wrap" id="stepCvvIconBox">
+                    <span class="step-num">3</span>
+                  </div>
+                  <div class="step-meta">
+                    <span class="step-title" id="stepCvvTitle">Setup Security CVV</span>
+                    <span class="step-sub" id="stepCvvSub">Choose your personal 3-digit card code</span>
+                  </div>
+                </div>
+                <div class="step-status-tag step-action" id="stepCvvTag">Setup CVV</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Section: Get Card Button -->
+          <section class="card-bottom-section">
+            <div class="apply-cta-container">
+              <button class="apply-card-btn" id="btnApplyCard">
+                <span class="apply-btn-title" id="btnApplyCardTitle">Get Virtual Card</span>
+                <span class="apply-btn-price" id="btnApplyCardPrice">$1.00 USD</span>
+              </button>
+            </div>
+          </section>
+
+        </main>
+      </div> <!-- /#cardsUnpurchasedView -->
+    </div> <!-- /#cardsPage -->
+
+    <!-- =====================================================================
+         PAGE 3: DEPOSIT PAGE VIEW (Matches Reference Screenshot Perfectly)
+         ===================================================================== -->
+    <div id="depositPage" class="app-page">
+      <!-- Top Bar: Back Button, Title, Chat Support -->
+      <header class="deposit-header">
+        <button class="back-nav-btn" id="depositBackBtn" aria-label="Go Back to Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <h1 class="deposit-header-title">Deposit</h1>
+        <button class="chat-support-btn" id="depositSupportBtn" aria-label="Customer Support">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Scrollable Container for Deposit Screen -->
+      <div class="deposit-scrollable">
+
+        <!-- Top Hero Card: Secure & Fast Deposit -->
+        <div class="deposit-hero-card">
+          <div class="deposit-shield-wrap">
+            <div class="shield-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" class="shield-svg">
+                <path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4z" fill="rgba(255, 255, 255, 0.2)" stroke="white" stroke-width="2"/>
+                <path d="m9 12 2 2 4-4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="deposit-hero-text">
+            <h2 class="deposit-hero-title">Secure &amp; Fast Deposit</h2>
+            <p class="deposit-hero-sub">Multiple methods available for your convenience.</p>
+          </div>
+        </div>
+
+        <!-- Section Title: Select Method -->
+        <h3 class="deposit-section-title">Select Method</h3>
+
+        <!-- Deposit Methods List: Pure USDT Crypto Networks -->
+        <div class="deposit-methods-list">
+
+          <!-- Network 1: USDT (Polygon - POL) -->
+          <div class="deposit-method-card" data-method="USDT" data-network="Polygon (POL)" data-fee="~ $0.01" data-confirm="128 blocks (~2 mins)">
+            <div class="method-left">
+              <div class="method-icon-box" style="background: #7950DD;">
+                <svg viewBox="0 0 128 128" class="method-svg" style="width: 26px; height: 26px;">
+                  <path d="M85.898 49.242a5.76 5.76 0 00-5.418 0l-12.214 7.223-8.532 4.742-12.214 7.227a5.76 5.76 0 01-5.418 0l-9.707-5.649a5.423 5.423 0 01-2.711-4.52V46.989a4.972 4.972 0 012.71-4.52l9.708-5.417a5.738 5.738 0 015.418 0l9.707 5.418a5.423 5.423 0 012.71 4.52v7.218l8.329-4.965v-6.996a4.963 4.963 0 00-2.664-4.52l-17.86-10.382a5.738 5.738 0 00-5.418 0L24.266 37.727a4.608 4.608 0 00-2.934 4.52v20.991a4.967 4.967 0 002.711 4.496l18.059 10.407a5.76 5.76 0 005.418 0l12.214-7 8.352-4.965 12.172-6.977a5.76 5.76 0 015.418 0l9.707 5.418a5.419 5.419 0 012.707 4.52v11.062a4.967 4.967 0 01-2.707 4.516l-9.707 5.64a5.738 5.738 0 01-5.418 0l-9.707-5.418a5.416 5.416 0 01-2.711-4.515v-7.25l-8.106 4.738v7.219a4.969 4.969 0 002.707 4.52L80.5 100.03a5.746 5.746 0 005.422 0l18.058-10.383a5.42 5.42 0 002.688-4.511v-21a4.964 4.964 0 00-2.711-4.516zm0 0" fill="#ffffff"/>
+                </svg>
+              </div>
+              <div class="method-meta">
+                <span class="method-name">USDT (Polygon)</span>
+                <span class="method-sub">Polygon (POL) • Ultra Low Fee</span>
+              </div>
+            </div>
+            <div class="method-right">
+              <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Network 2: USDT (Arbitrum One) -->
+          <div class="deposit-method-card" data-method="USDT" data-network="Arbitrum (One)" data-fee="~ $0.05" data-confirm="64 blocks (~1 min)">
+            <div class="method-left">
+              <div class="method-icon-box" style="background: #12AAFF;">
+                <svg viewBox="0 0 2500 2500" class="method-svg" style="width: 26px; height: 26px;">
+                  <path fill="#ffffff" d="M1172,644H939c-17,0-33,11-39,27L401,2039l241,139l550-1507c5-14-5-28-19-28L1172,644z"/>
+                  <path fill="#ffffff" d="M1580,644h-233c-17,0-33,11-39,27L738,2233l241,139l620-1701c5-14-5-28-19-28V644z"/>
+                  <path fill="#213147" d="M1435,1440l-121,332c-3,9-3,19,0,29l208,571l241-139l-289-793C1467,1422,1442,1422,1435,1440z"/>
+                  <path fill="#213147" d="M1678,882c-7-18-32-18-39,0l-121,332c-3,9-3,19,0,29l341,935l241-139L1678,883V882z"/>
+                </svg>
+              </div>
+              <div class="method-meta">
+                <span class="method-name">USDT (Arbitrum)</span>
+                <span class="method-sub">Arbitrum (One) • High Speed L2</span>
+              </div>
+            </div>
+            <div class="method-right">
+              <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Network 3: USDT (BEP-20 / BNB Chain) -->
+          <div class="deposit-method-card" data-method="USDT" data-network="BEP-20 (BNB)" data-fee="~ $0.10" data-confirm="15 blocks (~1 min)">
+            <div class="method-left">
+              <div class="method-icon-box" style="background: #F3BA2F;">
+                <svg viewBox="0 0 32 32" class="method-svg" style="width: 25px; height: 25px;">
+                  <path fill="#ffffff" d="M12.116 14.404L16 10.52l3.886 3.886 2.26-2.26L16 6l-6.144 6.144 2.26 2.26zM6 16l2.26-2.26L10.52 16l-2.26 2.26L6 16zm6.116 1.596L16 21.48l3.886-3.886 2.26 2.259L16 26l-6.144-6.144-.003-.003 2.263-2.257zM21.48 16l2.26-2.26L26 16l-2.26 2.26L21.48 16zm-3.188-.002h.002V16L16 18.294l-2.291-2.29-.004-.004.004-.003.401-.402.195-.195L16 13.706l2.293 2.293z"/>
+                </svg>
+              </div>
+              <div class="method-meta">
+                <span class="method-name">USDT (BNB Chain)</span>
+                <span class="method-sub">BEP-20 (BNB) • Fast &amp; Reliable</span>
+              </div>
+            </div>
+            <div class="method-right">
+              <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+
+        </div> <!-- /.deposit-methods-list -->
+
+        <!-- Bottom Gradient Info Pill (Min Deposit & Processing Time) -->
+        <div class="deposit-bottom-info-pill">
+          <div class="info-pill-col">
+            <span class="pill-label">Min. Deposit Amount</span>
+            <span class="pill-val-large">$1</span>
+          </div>
+          <div class="info-pill-divider"></div>
+          <div class="info-pill-col">
+            <span class="pill-label">Processing Time</span>
+            <span class="pill-val-medium">Instant - 15 Mins</span>
+          </div>
+        </div>
+
+        <div class="bottom-spacer"></div>
+
+      </div> <!-- /.deposit-scrollable -->
+    </div> <!-- /#depositPage -->
+
+    <!-- =====================================================================
+         PAGE 3B: DEPOSIT DETAILS DEDICATED FULL PAGE (#depositDetailsPage)
+         ===================================================================== -->
+    <div id="depositDetailsPage" class="app-page">
+      <header class="app-subpage-header">
+        <button class="back-nav-btn" id="depositDetailsBackBtn" aria-label="Go Back to Deposit Methods">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <h1 class="app-subpage-title" id="depositDetailsHeaderTitle">Deposit USDT</h1>
+        <button class="header-action-glass-btn" id="depositDetailsShareBtn" title="Share Address">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+        </button>
+      </header>
+
+      <div class="subpage-scrollable deposit-details-scrollable">
+        <!-- Active Network Banner -->
+        <div class="deposit-net-banner">
+          <div class="deposit-net-icon-box" id="depositNetIconBox">
+            <!-- Icon inserted dynamically -->
+          </div>
+          <div class="deposit-net-meta">
+            <span class="deposit-net-tag">SELECTED PROTOCOL</span>
+            <h3 class="deposit-net-name" id="depositNetName">Polygon (POL)</h3>
+          </div>
+          <span class="deposit-usdt-badge">USDT</span>
+        </div>
+
+        <!-- Translucent Glass QR Code Card -->
+        <div class="deposit-qr-card">
+          <div class="deposit-qr-box">
+            <svg viewBox="0 0 120 120" class="deposit-qr-svg">
+              <rect x="0" y="0" width="120" height="120" fill="#ffffff" rx="14" />
+              <!-- Finder patterns -->
+              <rect x="10" y="10" width="30" height="30" fill="#09132c" />
+              <rect x="15" y="15" width="20" height="20" fill="#ffffff" />
+              <rect x="20" y="20" width="10" height="10" fill="#09132c" />
+
+              <rect x="80" y="10" width="30" height="30" fill="#09132c" />
+              <rect x="85" y="15" width="20" height="20" fill="#ffffff" />
+              <rect x="90" y="20" width="10" height="10" fill="#09132c" />
+
+              <rect x="10" y="80" width="30" height="30" fill="#09132c" />
+              <rect x="15" y="85" width="20" height="20" fill="#ffffff" />
+              <rect x="20" y="90" width="10" height="10" fill="#09132c" />
+
+              <!-- Data matrix dots -->
+              <rect x="48" y="14" width="8" height="8" fill="#09132c" />
+              <rect x="62" y="18" width="8" height="8" fill="#09132c" />
+              <rect x="52" y="32" width="6" height="6" fill="#09132c" />
+              <rect x="68" y="36" width="6" height="6" fill="#09132c" />
+              <rect x="14" y="52" width="8" height="8" fill="#09132c" />
+              <rect x="28" y="60" width="6" height="6" fill="#09132c" />
+              <rect x="46" y="50" width="12" height="12" fill="#2563eb" rx="2" />
+              <rect x="64" y="54" width="8" height="8" fill="#09132c" />
+              <rect x="82" y="50" width="8" height="8" fill="#09132c" />
+              <rect x="98" y="58" width="8" height="8" fill="#09132c" />
+              <rect x="48" y="72" width="8" height="8" fill="#09132c" />
+              <rect x="62" y="82" width="10" height="10" fill="#09132c" />
+              <rect x="80" y="78" width="8" height="8" fill="#09132c" />
+              <rect x="94" y="90" width="12" height="12" fill="#09132c" />
+            </svg>
+          </div>
+          <p class="deposit-qr-instruction">
+            Send only <strong style="color: #60a5fa;">USDT</strong> via <strong id="depositNetWarnText" style="color: #ffffff;">Polygon (POL)</strong> to this address
+          </p>
+        </div>
+
+        <!-- Deposit Address Glass Card -->
+        <div class="deposit-address-card">
+          <div class="deposit-address-text-wrap">
+            <span class="deposit-address-tag">DEPOSIT ADDRESS</span>
+            <span class="deposit-address-val" id="depositDetailsAddressVal">0x71C8F7a3bE74C4B5286576b9DeaD3D6F2C1c82f9</span>
+          </div>
+          <button class="deposit-copy-action-btn" id="btnCopyDepositDetails">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width: 15px; height: 15px;">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span id="btnCopyDepositDetailsText">Copy</span>
+          </button>
+        </div>
+
+        <!-- Network Specifications (Frosted Glass List) -->
+        <div class="deposit-specs-card">
+          <div class="spec-row">
+            <span class="spec-label">Contract Protocol</span>
+            <span class="spec-val" id="depositSpecProtocol">Polygon PoS</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Minimum Deposit</span>
+            <span class="spec-val spec-green" id="depositSpecMin">1 USDT ($1)</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Block Confirmations</span>
+            <span class="spec-val" id="depositSpecConfirm">128 blocks (~2 mins)</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Crediting Time</span>
+            <span class="spec-val">Instant (~1-2 mins)</span>
+          </div>
+        </div>
+
+        <!-- Safety Warning Note Card -->
+        <div class="deposit-notice-card">
+          <div class="notice-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <p class="notice-text">
+            Sending any other asset besides USDT or using any other network will result in irreversible deposit loss.
+          </p>
+        </div>
+
+        <div class="bottom-spacer"></div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 4: PROFILE PAGE VIEW (Matches Reference Screenshot media_1791014876234.png)
+         ===================================================================== -->
+    <div id="profilePage" class="app-page">
+      <!-- Top Bar: Back Button, Title, Settings -->
+      <header class="profile-header">
+        <button class="back-nav-btn" id="profileBackBtn" aria-label="Go Back to Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <h1 class="profile-header-title">Profile</h1>
+        <button class="header-action-btn" id="profileSettingsBtn" aria-label="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Scrollable Container for Profile Screen -->
+      <div class="profile-scrollable">
+
+        <!-- Top Hero Card: User Info -->
+        <div class="profile-hero-card">
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar-inner" style="background: transparent; border: none; padding: 0;">
+              <img src="logo.svg" alt="QBrain Profile" style="width: 100%; height: 100%; border-radius: 50%; box-shadow: 0 4px 18px rgba(0, 242, 254, 0.45); display: block;" />
+            </div>
+          </div>
+          <div class="profile-user-meta">
+            <h2 class="profile-user-name">QBrain User</h2>
+            <span class="profile-user-email">user@qbrainpay.com</span>
+            <div class="profile-verified-badge">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+              <span>Verified</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Menu Group Card -->
+        <div class="profile-menu-card">
+
+          <!-- Item 1: Personal Information -->
+          <div class="profile-menu-item" data-menu="personal">
+            <div class="menu-item-left">
+              <div class="menu-icon-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+              <span class="menu-item-title">Personal Information</span>
+            </div>
+            <div class="menu-item-right">
+              <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Item 2: Security & Privacy -->
+          <div class="profile-menu-item" data-menu="security">
+            <div class="menu-item-left">
+              <div class="menu-icon-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <polyline points="9 12 11.5 14.5 15.5 9.5" stroke-width="2.2"/>
+                </svg>
+              </div>
+              <span class="menu-item-title">Security &amp; Privacy</span>
+            </div>
+            <div class="menu-item-right">
+              <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Item 3: KYC Verification -->
+          <div class="profile-menu-item" data-menu="kyc">
+            <div class="menu-item-left">
+              <div class="menu-icon-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+                  <circle cx="9" cy="10" r="2"></circle>
+                  <line x1="15" y1="8" x2="17" y2="8"></line>
+                  <line x1="15" y1="12" x2="17" y2="12"></line>
+                  <line x1="7" y1="16" x2="17" y2="16"></line>
+                </svg>
+              </div>
+              <span class="menu-item-title">KYC Verification</span>
+            </div>
+            <div class="menu-item-right">
+              <span class="menu-status-tag">Verified</span>
+              <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Item 4: Notifications -->
+          <div class="profile-menu-item" data-menu="notifications">
+            <div class="menu-item-left">
+              <div class="menu-icon-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+              </div>
+              <span class="menu-item-title">Notifications</span>
+            </div>
+            <div class="menu-item-right">
+              <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Item 5: Payment Methods -->
+          <div class="profile-menu-item" data-menu="payment">
+            <div class="menu-item-left">
+              <div class="menu-icon-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="5" width="20" height="14" rx="3"></rect>
+                  <line x1="2" y1="10" x2="22" y2="10"></line>
+                </svg>
+              </div>
+              <span class="menu-item-title">Payment Methods</span>
+            </div>
+            <div class="menu-item-right">
+              <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Item 6: Help & Support -->
+          <div class="profile-menu-item" data-menu="support">
+            <div class="menu-item-left">
+              <div class="menu-icon-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+              </div>
+              <span class="menu-item-title">Help &amp; Support</span>
+            </div>
+            <div class="menu-item-right">
+              <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Item 7: About QBrain Pay -->
+          <div class="profile-menu-item" data-menu="about">
+            <div class="menu-item-left">
+              <div class="menu-icon-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="16" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+              </div>
+              <span class="menu-item-title">About QBrain Pay</span>
+            </div>
+            <div class="menu-item-right">
+              <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+
+        </div> <!-- /.profile-menu-card -->
+
+        <!-- Log Out Button Card -->
+        <button class="profile-logout-card" id="btnLogOut">
+          <div class="logout-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <span class="logout-text">Log Out</span>
+        </button>
+
+        <div class="bottom-spacer"></div>
+
+      </div> <!-- /.profile-scrollable -->
+    </div> <!-- /#profilePage -->
+
+    <!-- =====================================================================
+         PAGE 5: SEND MONEY PAGE (#sendPage)
+         ===================================================================== -->
+    <div id="sendPage" class="app-page">
+      <!-- Top Bar: Back Button, Title, Chat Support -->
+      <header class="send-header">
+        <button class="back-nav-btn" id="sendBackBtn" aria-label="Go Back to Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <h1 class="send-header-title">Send Money</h1>
+        <button class="header-action-btn" id="sendChatBtn" aria-label="Chat Support">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Scrollable Main Container -->
+      <div class="send-scrollable">
+        
+        <!-- Field 1: To -->
+        <div class="send-form-group">
+          <label class="send-label" for="sendRecipientInput">To</label>
+          <div class="send-input-card" id="sendRecipientWrap">
+            <input type="text" id="sendRecipientInput" class="send-text-field" placeholder="Enter recipient's email, phone or ID" autocomplete="off">
+            <button class="send-contact-btn" id="btnSelectContact" aria-label="Select Contact">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <line x1="19" y1="8" x2="19" y2="14"/>
+                <line x1="22" y1="11" x2="16" y2="11"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Field 2: Amount -->
+        <div class="send-form-group">
+          <label class="send-label" for="sendAmountInput">Amount</label>
+          <div class="send-amount-card" id="sendAmountWrap">
+            <span class="send-currency-symbol">$</span>
+            <input type="text" inputmode="decimal" id="sendAmountInput" class="send-amount-field" placeholder="0.00" value="0.00">
+          </div>
+          <!-- Quick Amount Presets -->
+          <div class="send-quick-presets">
+            <button type="button" class="preset-pill" data-amount="10">$10</button>
+            <button type="button" class="preset-pill" data-amount="25">$25</button>
+            <button type="button" class="preset-pill" data-amount="50">$50</button>
+            <button type="button" class="preset-pill" data-amount="100">$100</button>
+          </div>
+        </div>
+
+        <!-- Field 3: Payment Method -->
+        <div class="send-form-group">
+          <label class="send-label">Payment Method</label>
+          <div class="send-method-card active" id="sendMethodCard">
+            <div class="send-method-left">
+              <div class="send-method-logo-wrap">
+                <svg class="send-q-logo" viewBox="0 0 40 40" fill="none">
+                  <circle cx="20" cy="20" r="19" fill="#0052ff" />
+                  <path d="M20 9C14.48 9 10 13.48 10 19C10 24.52 14.48 29 20 29C22.25 29 24.32 28.25 25.98 27L28.5 29.5C29.05 30.05 29.95 30.05 30.5 29.5C31.05 28.95 31.05 28.05 30.5 27.5L28 25C29.25 23.32 30 21.25 30 19C30 13.48 25.52 9 20 9ZM20 25C16.69 25 14 22.31 14 19C14 15.69 16.69 13 20 13C23.31 13 26 15.69 26 19C26 22.31 23.31 25 20 25Z" fill="white" />
+                </svg>
+              </div>
+              <div class="send-method-meta">
+                <span class="send-method-title">QBrain Pay Balance</span>
+                <span class="send-method-balance" id="sendMethodBalanceVal">$0.00</span>
+              </div>
+            </div>
+            <div class="send-method-radio">
+              <svg viewBox="0 0 24 24" fill="none" class="send-radio-svg">
+                <circle cx="12" cy="12" r="9" stroke="#60a5fa" stroke-width="2.5" />
+                <circle cx="12" cy="12" r="5" fill="#2563eb" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Field 4: Note (Optional) -->
+        <div class="send-form-group">
+          <label class="send-label" for="sendNoteInput">Note <span class="send-optional-text">(Optional)</span></label>
+          <div class="send-input-card" id="sendNoteWrap">
+            <input type="text" id="sendNoteInput" class="send-text-field" placeholder="Add a note..." autocomplete="off">
+          </div>
+        </div>
+
+        <!-- CTA Button: Continue -->
+        <button class="send-continue-btn" id="btnSendContinue">
+          <span class="continue-text">Continue</span>
+          <svg class="continue-chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="bottom-spacer"></div>
+
+      </div> <!-- /.send-scrollable -->
+    </div> <!-- /#sendPage -->
+
+    <!-- =====================================================================
+         PAGE 6: ASSETS PAGE (#assetsPage)
+         ===================================================================== -->
+    <div id="assetsPage" class="app-page">
+      <!-- Top Bar: Title "Assets", Refresh, Notifications, Profile -->
+      <header class="assets-header">
+        <h1 class="assets-title">Assets</h1>
+        <div class="assets-header-actions">
+          <!-- Refresh / Sync Button -->
+          <button class="header-glass-btn" id="assetsRefreshBtn" aria-label="Refresh Assets">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.19"/>
+            </svg>
+          </button>
+          <!-- Notification Bell -->
+          <button class="header-glass-btn" id="assetsNotifBtn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </button>
+          <!-- Profile Avatar Button -->
+          <button class="header-glass-btn avatar-btn" id="assetsProfileBtn" aria-label="Profile">
+            <div class="header-avatar-circle">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+              </svg>
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <!-- Scrollable Main Container -->
+      <div class="assets-scrollable">
+        
+        <!-- Hero Card: Total Assets -->
+        <div class="assets-hero-card">
+          <div class="assets-hero-left">
+            <span class="assets-hero-label">Total Assets</span>
+            <div class="assets-amount-row">
+              <span class="assets-amount-val" id="assetsTotalAmount">$0.00</span>
+              <button class="assets-eye-btn" id="assetsToggleEye" aria-label="Toggle assets visibility">
+                <svg id="assetsEyeOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <svg id="assetsEyeClosed" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+              </button>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
+              <div class="assets-trend-pill" style="margin-top: 0; background: rgba(16, 185, 129, 0.16); border-color: rgba(16, 185, 129, 0.35); color: #34d399;">
+                <span class="trend-arrow">●</span>
+                <span class="trend-rate">Multi-Chain Vault</span>
+              </div>
+              <!-- Live Confirming / Pending Deposit Indicator Pill -->
+              <div class="deposit-pending-pill hidden" id="assetsPendingDepositPill" style="margin-top: 0; padding: 2px 7.5px; font-size: 10px;">
+                <span class="pending-spinner-dot"></span>
+                <span class="pending-pill-text" id="assetsPendingPillText">Pending: $1.00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tactile Web3 Vault Medallion -->
+          <div class="balance-wallet-badge">
+            <div class="wallet-icon-circle" style="background: rgba(37, 99, 235, 0.18); border-color: rgba(96, 165, 250, 0.35);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width: 26px; height: 26px;">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <circle cx="12" cy="11" r="3"/>
+                <path d="m9 11 2 2 4-4"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons Row (Deposit, Withdraw, Transfer, History) -->
+        <div class="assets-actions-row">
+          <!-- Deposit -->
+          <button class="assets-action-btn" id="btnAssetsDeposit">
+            <div class="assets-icon-circle green-tint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5"/>
+                <path d="M5 14.5v3a2 2 0 002 2h10a2 2 0 002-2v-3"/>
+              </svg>
+            </div>
+            <span class="assets-btn-label">Deposit</span>
+          </button>
+
+          <!-- Withdraw -->
+          <button class="assets-action-btn" id="btnAssetsWithdraw">
+            <div class="assets-icon-circle blue-tint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 15V8m0 0l-3 3m3-3l3 3"/>
+              </svg>
+            </div>
+            <span class="assets-btn-label">Withdraw</span>
+          </button>
+
+          <!-- Transfer -->
+          <button class="assets-action-btn" id="btnAssetsTransfer">
+            <div class="assets-icon-circle indigo-tint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 4l4 4-4 4M21 8H7M7 20l-4-4 4-4M3 16h14"/>
+              </svg>
+            </div>
+            <span class="assets-btn-label">Transfer</span>
+          </button>
+
+          <!-- History -->
+          <button class="assets-action-btn" id="btnAssetsHistory">
+            <div class="assets-icon-circle cyan-tint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/>
+                <polyline points="12 7 12 12 15 14"/>
+              </svg>
+            </div>
+            <span class="assets-btn-label">History</span>
+          </button>
+        </div>
+
+        <!-- Section: My Wallets -->
+        <div class="assets-wallets-section">
+          <div class="assets-section-header">
+            <h2 class="assets-section-title">My Wallets</h2>
+            <button class="assets-manage-btn" id="btnManageWallets">Manage <span class="manage-arrow">›</span></button>
+          </div>
+
+          <div class="assets-wallets-card">
+            
+            <!-- Wallet 1: USDT (Polygon) -->
+            <div class="wallet-item" data-coin="polygon">
+              <div class="wallet-left">
+                <div class="wallet-coin-circle" style="background: #7950DD;">
+                  <svg viewBox="0 0 128 128" class="crypto-svg" style="width: 24px; height: 24px;">
+                    <path d="M85.898 49.242a5.76 5.76 0 00-5.418 0l-12.214 7.223-8.532 4.742-12.214 7.227a5.76 5.76 0 01-5.418 0l-9.707-5.649a5.423 5.423 0 01-2.711-4.52V46.989a4.972 4.972 0 012.71-4.52l9.708-5.417a5.738 5.738 0 015.418 0l9.707 5.418a5.423 5.423 0 012.71 4.52v7.218l8.329-4.965v-6.996a4.963 4.963 0 00-2.664-4.52l-17.86-10.382a5.738 5.738 0 00-5.418 0L24.266 37.727a4.608 4.608 0 00-2.934 4.52v20.991a4.967 4.967 0 002.711 4.496l18.059 10.407a5.76 5.76 0 005.418 0l12.214-7 8.352-4.965 12.172-6.977a5.76 5.76 0 015.418 0l9.707 5.418a5.419 5.419 0 012.707 4.52v11.062a4.967 4.967 0 01-2.707 4.516l-9.707 5.64a5.738 5.738 0 01-5.418 0l-9.707-5.418a5.416 5.416 0 01-2.711-4.515v-7.25l-8.106 4.738v7.219a4.969 4.969 0 002.707 4.52L80.5 100.03a5.746 5.746 0 005.422 0l18.058-10.383a5.42 5.42 0 002.688-4.511v-21a4.964 4.964 0 00-2.711-4.516zm0 0" fill="#ffffff"/>
+                  </svg>
+                </div>
+                <div class="wallet-meta">
+                  <span class="wallet-name">USDT (Polygon)</span>
+                  <span class="wallet-sub">POL • Fast &amp; Cheap</span>
+                </div>
+              </div>
+              <div class="wallet-right">
+                <span class="wallet-amount" id="walPolAmount">0.00</span>
+                <span class="wallet-fiat" id="walPolFiat">≈ $0.00</span>
+              </div>
+            </div>
+
+            <!-- Wallet 2: USDT (Arbitrum) -->
+            <div class="wallet-item" data-coin="arbitrum">
+              <div class="wallet-left">
+                <div class="wallet-coin-circle" style="background: #12AAFF;">
+                  <svg viewBox="0 0 2500 2500" class="crypto-svg" style="width: 24px; height: 24px;">
+                    <path fill="#ffffff" d="M1172,644H939c-17,0-33,11-39,27L401,2039l241,139l550-1507c5-14-5-28-19-28L1172,644z"/>
+                    <path fill="#ffffff" d="M1580,644h-233c-17,0-33,11-39,27L738,2233l241,139l620-1701c5-14-5-28-19-28V644z"/>
+                    <path fill="#213147" d="M1435,1440l-121,332c-3,9-3,19,0,29l208,571l241-139l-289-793C1467,1422,1442,1422,1435,1440z"/>
+                    <path fill="#213147" d="M1678,882c-7-18-32-18-39,0l-121,332c-3,9-3,19,0,29l341,935l241-139L1678,883V882z"/>
+                  </svg>
+                </div>
+                <div class="wallet-meta">
+                  <span class="wallet-name">USDT (Arbitrum)</span>
+                  <span class="wallet-sub">ARB • High Speed L2</span>
+                </div>
+              </div>
+              <div class="wallet-right">
+                <span class="wallet-amount" id="walArbAmount">0.00</span>
+                <span class="wallet-fiat" id="walArbFiat">≈ $0.00</span>
+              </div>
+            </div>
+
+            <!-- Wallet 3: USDT (BNB Chain) -->
+            <div class="wallet-item" data-coin="bnb">
+              <div class="wallet-left">
+                <div class="wallet-coin-circle" style="background: #F3BA2F;">
+                  <svg viewBox="0 0 32 32" class="crypto-svg" style="width: 23px; height: 23px;">
+                    <path fill="#ffffff" d="M12.116 14.404L16 10.52l3.886 3.886 2.26-2.26L16 6l-6.144 6.144 2.26 2.26zM6 16l2.26-2.26L10.52 16l-2.26 2.26L6 16zm6.116 1.596L16 21.48l3.886-3.886 2.26 2.259L16 26l-6.144-6.144-.003-.003 2.263-2.257zM21.48 16l2.26-2.26L26 16l-2.26 2.26L21.48 16zm-3.188-.002h.002V16L16 18.294l-2.291-2.29-.004-.004.004-.003.401-.402.195-.195L16 13.706l2.293 2.293z"/>
+                  </svg>
+                </div>
+                <div class="wallet-meta">
+                  <span class="wallet-name">USDT (BNB Chain)</span>
+                  <span class="wallet-sub">BEP-20 • Low Fee</span>
+                </div>
+              </div>
+              <div class="wallet-right">
+                <span class="wallet-amount" id="walBnbAmount">0.00</span>
+                <span class="wallet-fiat" id="walBnbFiat">≈ $0.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-spacer"></div>
+
+      </div> <!-- /.assets-scrollable -->
+    </div> <!-- /#assetsPage -->
+
+    <!-- Bottom Navigation Bar with Ultra-Crisp Fintech Solid/Outline Icons -->
+    <nav class="bottom-nav hide-nav">
+      
+      <!-- Home -->
+      <button class="nav-item active" data-nav="home">
+        <div class="nav-icon-box">
+          <!-- Active Filled Icon -->
+          <svg class="nav-svg-icon icon-active" viewBox="0 0 24 24" fill="currentColor" shape-rendering="geometricPrecision">
+            <path d="M12 2.1a1.2 1.2 0 0 0-.78.29l-8.5 7.08a1.2 1.2 0 0 0-.42.93V19.8A2.2 2.2 0 0 0 4.5 22h5a1 1 0 0 0 1-1v-5a1.5 1.5 0 0 1 1.5-1.5h0a1.5 1.5 0 0 1 1.5 1.5v5a1 1 0 0 0 1 1h5a2.2 2.2 0 0 0 2.2-2.2V10.4a1.2 1.2 0 0 0-.42-.93l-8.5-7.08a1.2 1.2 0 0 0-.78-.29z"/>
+          </svg>
+          <!-- Inactive Outline Icon -->
+          <svg class="nav-svg-icon icon-inactive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+            <path d="M3 10.5L12 3L21 10.5V20C21 20.55 20.55 21 20 21H15V15H9V21H4C3.45 21 3 20.55 3 20V10.5Z"/>
+          </svg>
+        </div>
+        <span class="nav-label">Home</span>
+      </button>
+
+      <!-- Card -->
+      <button class="nav-item" data-nav="cards">
+        <div class="nav-icon-box">
+          <!-- Active Filled Icon -->
+          <svg class="nav-svg-icon icon-active" viewBox="0 0 24 24" fill="currentColor" shape-rendering="geometricPrecision">
+            <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4H4V6h16v2zm-12 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0h-3v-2h3v2z"/>
+          </svg>
+          <!-- Inactive Outline Icon -->
+          <svg class="nav-svg-icon icon-inactive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+            <rect x="2" y="5" width="20" height="14" rx="3"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+            <circle cx="7" cy="15" r="1.2" fill="currentColor"/>
+          </svg>
+        </div>
+        <span class="nav-label">Card</span>
+      </button>
+
+      <!-- Center Floating Scanner FAB -->
+      <div class="center-fab-wrapper">
+        <button class="fab-btn" id="fabScan" aria-label="Scan QR Code">
+          <div class="fab-sheen"></div>
+          <svg class="fab-svg-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+            <path d="M4 8V5a1 1 0 0 1 1-1h3"/>
+            <path d="M16 4h3a1 1 0 0 1 1 1v3"/>
+            <path d="M20 16v3a1 1 0 0 1-1 1h-3"/>
+            <path d="M8 20H5a1 1 0 0 1-1-1v-3"/>
+            <rect x="8.5" y="8.5" width="7" height="7" rx="1.6" fill="white"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Send -->
+      <button class="nav-item" data-nav="send">
+        <div class="nav-icon-box">
+          <!-- Active Filled Icon -->
+          <svg class="nav-svg-icon icon-active" viewBox="0 0 24 24" fill="currentColor" shape-rendering="geometricPrecision">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+          <!-- Inactive Outline Icon -->
+          <svg class="nav-svg-icon icon-inactive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </div>
+        <span class="nav-label">Send</span>
+      </button>
+
+      <!-- Assets -->
+      <button class="nav-item" data-nav="assets">
+        <div class="nav-icon-box">
+          <!-- Active Filled Icon -->
+          <svg class="nav-svg-icon icon-active" viewBox="0 0 24 24" fill="currentColor" shape-rendering="geometricPrecision">
+            <path d="M21 7.28V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-2.28c.59-.35 1-.98 1-1.72V9c0-.74-.41-1.37-1-1.72zM20 9v6h-7V9h7zM5 5h14v2h-8c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h8v2H5V5z"/>
+          </svg>
+          <!-- Inactive Outline Icon -->
+          <svg class="nav-svg-icon icon-inactive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+            <rect x="2" y="5" width="20" height="14" rx="3"/>
+            <path d="M2 10h20"/>
+            <circle cx="16" cy="14" r="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <span class="nav-label">Assets</span>
+      </button>
+
+    </nav>
+
+    <!-- =====================================================================
+         PAGE 7: NOTIFICATIONS DEDICATED PAGE (#notificationsPage)
+         ===================================================================== -->
+    <div id="notificationsPage" class="app-page">
+      <header class="app-subpage-header">
+        <button class="back-nav-btn" id="notifPageBackBtn" aria-label="Go Back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <h1 class="app-subpage-title">Notifications</h1>
+        <button class="header-action-glass-btn" id="btnClearAllNotifs" title="Mark all as read">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Category Filters -->
+      <div class="notif-category-bar">
+        <button class="notif-cat-pill active" data-cat="all">All</button>
+        <button class="notif-cat-pill" data-cat="transactions">Transactions</button>
+        <button class="notif-cat-pill" data-cat="security">Security</button>
+        <button class="notif-cat-pill" data-cat="cards">Cards</button>
+      </div>
+
+      <div class="subpage-scrollable notif-scrollable">
+        <div class="notif-timeline-group" id="notifTimelineGroup" style="display: none;">
+          <div class="notif-timeline-header">
+            <span>Recent</span>
+            <span class="notif-count-badge" id="notifUnreadBadge" style="display: none;">0 new</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Notifications Container -->
+        <div id="notificationsListContainer">
+          <!-- Rendered dynamically via JS -->
+        </div>
+
+        <!-- Clean Zero-Mock Empty State -->
+        <div class="empty-transactions-box" id="emptyNotificationsState" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 20px; text-align: center; margin-top: 20px;">
+          <div class="empty-icon-wrap" style="width: 64px; height: 64px; border-radius: 20px; background: rgba(0, 82, 255, 0.12); border: 1px solid rgba(0, 114, 255, 0.25); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 30px; height: 30px;">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </div>
+          <p class="empty-title" style="font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 6px;">No notifications yet</p>
+          <p class="empty-sub" style="font-size: 13px; color: #94a3b8; max-width: 260px; line-height: 1.5;">Real-time alerts regarding your blockchain deposits, transfers, and security will appear here.</p>
+        </div>
+
+        <div class="bottom-spacer"></div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 8: FULLSCREEN QR SCANNER DEDICATED PAGE (#scannerPage)
+         ===================================================================== -->
+    <div id="scannerPage" class="app-page page-dark-scanner">
+      <header class="scanner-top-bar">
+        <button class="scanner-action-btn" id="scannerBackBtn" aria-label="Close Scanner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <span class="scanner-header-title">Scan QR Code</span>
+        <button class="scanner-action-btn" id="scannerFlashBtn" aria-label="Toggle Flashlight">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </button>
+      </header>
+
+      <div class="scanner-viewport-wrap">
+        <video id="scannerVideo" playsinline autoplay muted class="scanner-video-stream"></video>
+        <div class="scanner-reticle">
+          <span class="corner-border top-left"></span>
+          <span class="corner-border top-right"></span>
+          <span class="corner-border bottom-left"></span>
+          <span class="corner-border bottom-right"></span>
+          <div class="scanner-laser-line"></div>
+        </div>
+        <p class="scanner-hint-text">Center QR code inside the frame to pay</p>
+      </div>
+
+      <div class="scanner-bottom-controls">
+        <button class="scanner-tool-btn" id="btnUploadQR">
+          <div class="tool-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;">
+              <rect x="3" y="3" width="18" height="18" rx="5" ry="5" stroke="#00f2fe"/>
+              <circle cx="8.5" cy="8.5" r="2.2" fill="#00f2fe"/>
+              <path d="M21 15l-5-5L5 21" stroke="#00f2fe" stroke-width="2.2"/>
+              <path d="M14 14l2.5 2.5" stroke="#00f2fe" stroke-width="2.2"/>
+            </svg>
+          </div>
+          <span>Upload Image</span>
+        </button>
+        <button class="scanner-tool-btn" id="btnMyQRCode">
+          <div class="tool-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;">
+              <rect x="3" y="3" width="7" height="7" rx="2" fill="rgba(0,242,254,0.2)" stroke="#00f2fe"/>
+              <rect x="14" y="3" width="7" height="7" rx="2" fill="rgba(0,242,254,0.2)" stroke="#00f2fe"/>
+              <rect x="14" y="14" width="7" height="7" rx="2" fill="rgba(0,242,254,0.2)" stroke="#00f2fe"/>
+              <rect x="3" y="14" width="7" height="7" rx="2" fill="rgba(0,242,254,0.2)" stroke="#00f2fe"/>
+              <circle cx="6.5" cy="6.5" r="1.5" fill="#00f2fe"/>
+              <circle cx="17.5" cy="6.5" r="1.5" fill="#00f2fe"/>
+              <circle cx="17.5" cy="17.5" r="1.5" fill="#00f2fe"/>
+              <circle cx="6.5" cy="17.5" r="1.5" fill="#00f2fe"/>
+            </svg>
+          </div>
+          <span>My QR Code</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 9: PERSONAL INFORMATION DEDICATED PAGE (#personalInfoPage)
+         ===================================================================== -->
+    <div id="personalInfoPage" class="app-page">
+      <header class="app-subpage-header">
+        <button class="back-nav-btn" id="personalInfoBackBtn" aria-label="Go Back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <h1 class="app-subpage-title">Personal Information</h1>
+        <div style="width: 40px;"></div>
+      </header>
+
+      <div class="subpage-scrollable">
+        <div class="profile-hero-badge-card">
+          <div class="avatar-large-gradient">
+            <span id="personalInfoAvatarInitial">Q</span>
+            <div class="avatar-badge-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+          </div>
+          <h2 class="badge-user-name" id="personalInfoUserName">QBrain User</h2>
+        </div>
+
+        <div class="info-group-container">
+          <!-- Row 1: Legal Name -->
+          <div class="info-field-card">
+            <div class="info-field-main">
+              <div class="info-field-icon-wrap icon-blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <div class="info-field-left">
+                <span class="info-field-label">Legal Name</span>
+                <span class="info-field-val" id="infoLegalName">QBrain User</span>
+              </div>
+            </div>
+            <button class="info-copy-btn" id="btnCopyLegalName" title="Copy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </div>
+
+          <!-- Row 2: Email Address -->
+          <div class="info-field-card">
+            <div class="info-field-main">
+              <div class="info-field-icon-wrap icon-purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <path d="m22 7-10 6L2 7"/>
+                </svg>
+              </div>
+              <div class="info-field-left">
+                <span class="info-field-label">Email Address</span>
+                <span class="info-field-val" id="infoEmail">user@qbrainpay.com</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 3: Account UID -->
+          <div class="info-field-card">
+            <div class="info-field-main">
+              <div class="info-field-icon-wrap icon-emerald">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="16" rx="3"/>
+                  <circle cx="9" cy="10" r="2"/>
+                  <path d="M15 8h2m-2 4h2M7 16h10"/>
+                </svg>
+              </div>
+              <div class="info-field-left">
+                <span class="info-field-label">Account UID</span>
+                <span class="info-field-val font-mono" id="infoUID">QB-94821038</span>
+              </div>
+            </div>
+            <button class="info-copy-btn" id="btnCopyUID" title="Copy UID">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </div>
+
+          <!-- Row 4: Country / Region -->
+          <div class="info-field-card">
+            <div class="info-field-main">
+              <div class="info-field-icon-wrap icon-cyan">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20"/>
+                </svg>
+              </div>
+              <div class="info-field-left">
+                <span class="info-field-label">Country / Region</span>
+                <span class="info-field-val">Global (Multi-Currency)</span>
+              </div>
+            </div>
+            <span class="info-jurisdiction-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="width: 12px; height: 12px; margin-right: 4px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Verified
+            </span>
+          </div>
+        </div>
+
+        <div class="bottom-spacer"></div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 10: TRANSACTION DIGITAL RECEIPT SLIP (#transactionReceiptPage)
+         ===================================================================== -->
+    <div id="transactionReceiptPage" class="app-page">
+      <header class="app-subpage-header">
+        <button class="back-nav-btn" id="receiptBackBtn" aria-label="Go Back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <h1 class="app-subpage-title">Digital Receipt</h1>
+        <button class="header-action-glass-btn" id="btnShareReceipt" title="Share Receipt">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"/>
+            <circle cx="6" cy="12" r="3"/>
+            <circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+          </svg>
+        </button>
+      </header>
+
+      <div class="subpage-scrollable receipt-page-body">
+        <div class="receipt-card-premium">
+          <div class="receipt-top-status">
+            <div class="receipt-icon-circle" id="receiptIconBox">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" style="width: 26px; height: 26px;">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <h2 class="receipt-amount-display" id="receiptAmountVal">+$50.00</h2>
+            <span class="receipt-status-pill" id="receiptStatusBadge">Settled &amp; Verified</span>
+          </div>
+
+          <!-- Perforated Ticket Notches Divider -->
+          <div class="receipt-ticket-notch-divider">
+            <span class="notch notch-left"></span>
+            <div class="notch-dash-line"></div>
+            <span class="notch notch-right"></span>
+          </div>
+
+          <div class="receipt-row-group">
+            <div class="receipt-row">
+              <span class="receipt-lbl">Transaction Type</span>
+              <span class="receipt-val font-semibold" id="receiptTypeVal">USDT Deposit</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-lbl">Network / Route</span>
+              <span class="receipt-val font-semibold" id="receiptMethodVal">Polygon (POL)</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-lbl">Timestamp</span>
+              <span class="receipt-val" id="receiptTimeVal">Today, 03:12 AM</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-lbl">Transaction Hash</span>
+              <div class="receipt-hash-copy-wrap">
+                <span class="receipt-val font-mono" id="receiptHashVal">0x7f2...8e91</span>
+                <button type="button" class="receipt-mini-copy-btn" id="btnCopyReceiptHash" title="Copy Hash">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-lbl">Settlement Fee</span>
+              <span class="receipt-val" style="color: #059669; font-weight: 800;">$0.00 (Zero Fee)</span>
+            </div>
+          </div>
+
+          <!-- Authentic Blockchain Verification Seal -->
+          <div class="receipt-seal-box" style="margin-top: 18px; padding-top: 14px; border-top: 1px dashed rgba(203, 213, 225, 0.4); display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <span style="font-size: 11.5px; font-weight: 700; color: #475569;">On-Chain Confirmed</span>
+            </div>
+            <span class="receipt-ref-code font-mono" id="receiptRefCode" style="font-size: 11.5px; color: #64748b; font-weight: 700;">QB-TXN-20261004-9482</span>
+          </div>
+        </div>
+
+        <!-- Download & Done Action Bar -->
+        <div class="receipt-action-buttons">
+          <button class="receipt-download-btn" id="btnDownloadReceipt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width: 18px; height: 18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Save to Device</span>
+          </button>
+        </div>
+
+        <div class="bottom-spacer"></div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 11: ALL TRANSACTIONS DEDICATED HISTORY PAGE (#allTransactionsPage)
+         ===================================================================== -->
+    <div id="allTransactionsPage" class="app-page">
+      <header class="app-subpage-header">
+        <button class="back-nav-btn" id="allTxBackBtn" aria-label="Go Back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <h1 class="app-subpage-title">Transactions</h1>
+        <button class="header-action-glass-btn" id="allTxRefreshBtn" title="Refresh">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+          </svg>
+        </button>
+      </header>
+
+      <div class="subpage-scrollable">
+        <!-- Search & Filter Controls -->
+        <div class="all-tx-search-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="allTxSearchInput" class="all-tx-search-field" placeholder="Search by network, recipient, or note...">
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="tx-filter-pills-bar">
+          <button class="tx-filter-pill active" data-filter="all">All</button>
+          <button class="tx-filter-pill" data-filter="deposit">Deposits</button>
+          <button class="tx-filter-pill" data-filter="send">Transfers</button>
+          <button class="tx-filter-pill" data-filter="card">Card Issuance</button>
+        </div>
+
+        <!-- Transaction Group Section -->
+        <div class="all-tx-date-group-header">
+          <span class="tx-date-group-title">October 2026</span>
+          <span class="tx-date-group-count" id="allTxGroupCount">Activity</span>
+        </div>
+
+        <!-- Transaction List -->
+        <div class="all-tx-list" id="allTxListContainer">
+          <!-- Rendered dynamically via JS -->
+        </div>
+
+        <div class="bottom-spacer"></div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 12: BIOMETRIC FACE VERIFICATION MODAL / OVERLAY (#faceVerificationModal)
+         ===================================================================== -->
+    <div class="face-verify-overlay hidden" id="faceVerificationModal">
+      <div class="face-verify-container">
+        
+        <!-- Header: Close & Title -->
+        <header class="face-verify-header">
+          <button class="face-verify-back-btn" id="faceVerifyCloseBtn" aria-label="Cancel Face Verification">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <div class="face-verify-title-wrap">
+            <h2 class="face-verify-title">Face Verification</h2>
+            <span class="face-verify-badge-sec">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" style="width: 12px; height: 12px; margin-right: 4px;">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              Biometric Liveness
+            </span>
+          </div>
+          <div style="width: 38px;"></div>
+        </header>
+
+        <!-- Main Biometric Scanner Stage -->
+        <div class="face-verify-stage" id="faceVerifyActiveStage">
+          <!-- Live Front Camera Video Viewport -->
+          <div class="face-oval-wrapper">
+            <video id="faceVerifyVideo" class="face-video-stream" autoplay playsinline muted></video>
+            
+            <!-- Oval HUD Guide Frame & Biometric Mesh -->
+            <div class="face-biometric-hud">
+              <div class="face-hud-oval"></div>
+              <div class="face-hud-laser" id="faceHudLaser"></div>
+              <div class="face-hud-brackets top-left"></div>
+              <div class="face-hud-brackets top-right"></div>
+              <div class="face-hud-brackets bottom-left"></div>
+              <div class="face-hud-brackets bottom-right"></div>
+            </div>
+
+            <!-- Circular SVG 30s Countdown Ring -->
+            <svg class="face-countdown-svg" viewBox="0 0 260 260">
+              <circle class="countdown-track" cx="130" cy="130" r="120" />
+              <circle class="countdown-progress" id="faceCountdownCircle" cx="130" cy="130" r="120" />
+            </svg>
+          </div>
+
+          <!-- 30-Second Live Countdown Pill -->
+          <div class="face-timer-box">
+            <span class="face-timer-label">VERIFYING TIME</span>
+            <span class="face-timer-clock" id="faceTimerClock">00:30</span>
+          </div>
+
+          <!-- Dynamic Live Step Instruction -->
+          <div class="face-prompt-box">
+            <p class="face-prompt-main" id="facePromptMain">Position your face inside the frame</p>
+            <p class="face-prompt-sub" id="facePromptSub">Please look straight into front camera and stay still</p>
+          </div>
+
+          <!-- Security Compliance Footer -->
+          <div class="face-verify-compliance">
+            <span class="compliance-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 13px; height: 13px;">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              3D Liveness Detection
+            </span>
+            <span class="compliance-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 13px; height: 13px;">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Permanent DB Verification
+            </span>
+          </div>
+        </div>
+
+        <!-- Success Completion State (Shown after 30s) -->
+        <div class="face-verify-success-stage hidden" id="faceVerifySuccessStage">
+          <div class="success-ring-wrap">
+            <div class="success-pulse-glow"></div>
+            <div class="success-check-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="check-svg">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+          </div>
+          <h2 class="success-title">Face Verification Done!</h2>
+          <p class="success-subtitle">Your identity has been verified successfully and permanently linked to your QBrain Pay account.</p>
+          <div class="success-meta-card">
+            <div class="meta-row">
+              <span class="meta-lbl">Verification Status</span>
+              <span class="meta-val approved">Identity Verified ✓</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-lbl">Virtual Card Fee</span>
+              <span class="meta-val">$1.00 USD</span>
+            </div>
+          </div>
+          <button class="face-continue-btn" id="btnFaceContinueToCard">
+            Continue to Card Activation
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Dedicated Luxury CVV Setup Modal -->
+    <div class="cvv-modal-overlay hidden" id="cvvSetupModalOverlay">
+      <div class="cvv-modal-card">
+        <div class="cvv-modal-handle"></div>
+        <div class="cvv-modal-top">
+          <div class="cvv-shield-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <circle cx="12" cy="11" r="2.5" fill="#00f2fe" stroke="none"/>
+              <path d="M12 13.5v3" stroke="#060b18" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3 class="cvv-modal-title">Set Card CVV</h3>
+          <p class="cvv-modal-subtitle">Choose your personal 3-digit security code for your Virtual Visa card.</p>
+        </div>
+
+        <div class="cvv-input-section">
+          <label class="cvv-field-label">3-DIGIT SECURITY CODE</label>
+          <div class="cvv-input-wrap">
+            <input type="password" id="customCvvInput" maxlength="3" inputmode="numeric" pattern="[0-9]*" placeholder="•••" class="cvv-pin-field" autocomplete="off" />
+            <button type="button" class="cvv-toggle-visibility" id="cvvToggleVisibilityBtn" aria-label="Toggle CVV visibility">
+              <svg id="cvvEyeOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg id="cvvEyeClosed" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="cvv-hint-row">
+            <span class="cvv-helper-text">This code will be your actual CVV for transactions</span>
+            <button type="button" class="cvv-randomize-btn" id="btnRandomizeCvv">Randomize</button>
+          </div>
+        </div>
+
+        <div class="cvv-modal-actions">
+          <button type="button" class="cvv-btn-cancel" id="btnCancelCvv">Cancel</button>
+          <button type="button" class="cvv-btn-save" id="btnSaveCvv">Save CVV</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Bottom Sheet Modal (For Limit & Settings) -->
+    <div class="card-modal-backdrop hidden" id="cardModalBackdrop">
+      <div class="card-modal-sheet" id="cardModalSheet">
+        <div class="modal-drag-pill"></div>
+        <div class="modal-header">
+          <h3 class="modal-title" id="modalTitle">Card Limits</h3>
+          <button class="modal-close-btn" id="modalCloseBtn">✕</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <!-- Dynamic Content Loaded via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Native App Privacy Shield Overlay (Auto-blurs when app is minimized / in recents) -->
+    <div class="app-privacy-shield hidden" id="appPrivacyShield">
+      <div class="shield-inner-content">
+        <div class="shield-logo-wrap">
+          <img src="logo.svg" alt="QBrain Pay" class="shield-logo-img" />
+        </div>
+        <h4 class="shield-title">QBrain Pay</h4>
+        <span class="shield-sub">Secure Encrypted Session</span>
+      </div>
+    </div>
+
+    <!-- Deposit Confirmed Luxury Celebration Banner -->
+    <div class="deposit-celebration-pill hidden" id="depositCelebrationPill">
+      <div class="celebration-icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+      <div class="celebration-text-wrap">
+        <span class="celebration-title" id="celebrationTitle">Deposit Confirmed!</span>
+        <span class="celebration-sub" id="celebrationSub">+$10.00 USDT added to your wallet</span>
+      </div>
+    </div>
+
+    <!-- Floating Toast Notification -->
+    <div class="app-toast-pill hidden" id="appToastPill">
+      <div class="toast-icon-circle">✓</div>
+      <span class="toast-text" id="appToastText">Action Successful</span>
+    </div>
+
+  </div> <!-- /.app-container -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js?v=20261004_zero_mock_v3"></script>
+</body>
+</html>
